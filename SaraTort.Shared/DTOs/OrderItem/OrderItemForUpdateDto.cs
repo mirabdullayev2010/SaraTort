@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace SaraTort.Shared.DTOs.OrderItem;
 
-namespace SaraTort.Shared.DTOs.OrderItem
+public class OrderItemForUpdateDto
 {
-    internal class OrderItemForUpdateDto
-    {
-    }
+
 }

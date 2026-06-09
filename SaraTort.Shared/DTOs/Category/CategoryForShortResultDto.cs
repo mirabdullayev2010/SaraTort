@@ -1,6 +1,6 @@
-﻿namespace SaraTort.BLL.DTOs.Category;
+﻿namespace SaraTort.Shared.DTOs.Category;
 
-public class CategoryForResultDto
+public class CategoryForShortResultDto
 {
     public long Id { get; set; }
     public string Name { get; set; }

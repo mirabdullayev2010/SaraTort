@@ -2,8 +2,8 @@
 
 public class CakeOptionForResultDto
 {
-    public int Id { get; set; }
-    public int CakeId { get; set; }
+    public long Id { get; set; }
+    public long CakeId { get; set; }
     public double WeightInKg { get; set; }
     public decimal Price { get; set; }
     public int StockQuantity { get; set; }

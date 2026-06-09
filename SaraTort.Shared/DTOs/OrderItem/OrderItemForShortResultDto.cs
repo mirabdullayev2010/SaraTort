@@ -1,6 +1,6 @@
-﻿namespace SaraTort.BLL.DTOs.OrderItem;
+﻿namespace SaraTort.Shared.DTOs.OrderItem;
 
-public class OrderItemForResultDto
+public class OrderItemForShortResultDto
 {
     public long Id { get; set; }
     public long CakeOptionId { get; set; }

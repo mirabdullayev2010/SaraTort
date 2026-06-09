@@ -4,7 +4,7 @@ using SaraTort.Domain.Entities.Orders;
 
 namespace SaraTort.BLL.Interfaces;
 
-public interface IOrderService : ICrudService<Order, OrderForCreateDto, OrderForUpdateStatusDto, OrderForResultDto>
+public interface IOrderService : ICrudService<Order, OrderForCreateDto, OrderForUpdateDto, OrderForResultDto>
 {
-    Task<OrderForResultDto> UpdateStatusAsync(OrderForUpdateStatusDto dto);
+    Task<OrderForResultDto> UpdateStatusAsync(OrderForUpdateDto dto);
 }

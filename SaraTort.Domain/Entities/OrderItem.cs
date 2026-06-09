@@ -1,14 +1,20 @@
-﻿namespace SaraTort.Domain.Entities.Orders;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace SaraTort.Domain.Entities.Orders;
+
+[Table("OrderItems")]
 public class OrderItem
 {
-    public int Id { get; set; }
-
-    public int OrderId { get; set; }
+    [Column("id")]
+    public long Id { get; set; }
+    [Column("order_id")]
+    public long OrderId { get; set; }
+    [Column("order")]
     public Order Order { get; set; } = null!;
-
+    [Column("cake_option_id")]
     public int CakeOptionId { get; set; }
-
+    [Column("quantity")]
     public int Quantity { get; set; } 
+    [Column("price_at_purchase")]
     public decimal PriceAtPurchase { get; set; } 
 }

@@ -5,7 +5,6 @@ using SaraTort.BLL.DTOs.Category;
 using SaraTort.BLL.DTOs.Order;
 using SaraTort.Domain.Entities.Catalog;
 using SaraTort.Domain.Entities.Orders;
-using OrderItemForResultDto = SaraTort.BLL.DTOs.Order.OrderItemForResultDto;
 
 namespace SaraTort.BLL.Mappers;
 
@@ -33,6 +32,5 @@ public class MappingProfile : Profile
         CreateMap<Order, OrderForResultDto>();
         CreateMap<OrderForCreateDto, Order>();
         CreateMap<OrderItem, OrderForResultDto>();
-        CreateMap<OrderItem, OrderItemForResultDto>();
     }
 }

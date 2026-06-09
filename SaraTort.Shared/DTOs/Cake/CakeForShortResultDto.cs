@@ -1,9 +1,9 @@
 ﻿using SaraTort.BLL.DTOs.CakeOption;
 using SaraTort.BLL.DTOs.CakeReview;
 
-namespace SaraTort.BLL.DTOs.Cake;
+namespace SaraTort.Shared.DTOs.Cake;
 
-public class CakeForResultDto
+public class CakeForShortResultDto
 {
     public int Id { get; set; }
     public string Name { get; set; }

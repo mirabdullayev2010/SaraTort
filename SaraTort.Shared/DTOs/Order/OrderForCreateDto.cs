@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SaraTort.BLL.DTOs.OrderItem;
 
 namespace SaraTort.BLL.DTOs.Order;
 
@@ -23,14 +24,4 @@ public class OrderForCreateDto
 
     [Required(ErrorMessage = "Buyurtmada kamida bitta tort bo'lishi kerak.")]
     public List<OrderItemForCreateDto> OrderItems { get; set; } = new();
-}
-
-public class OrderItemForCreateDto
-{
-    [Required]
-    public int CakeOptionId { get; set; }
-
-    [Required]
-    [Range(1, 100, ErrorMessage = "Soni kamida 1 ta bo'lishi kerak.")]
-    public int Quantity { get; set; }
 }

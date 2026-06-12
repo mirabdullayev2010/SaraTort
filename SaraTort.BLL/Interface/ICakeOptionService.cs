@@ -6,5 +6,5 @@ namespace SaraTort.BLL.Interface;
 
 public interface ICakeOptionService : ICrudService<CakeOption, CakeOptionForCreateDto, CakeOptionForUpdateDto, CakeOptionForResultDto>
 {
-
+     
 }

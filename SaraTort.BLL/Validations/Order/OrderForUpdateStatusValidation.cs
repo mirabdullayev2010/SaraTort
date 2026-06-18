@@ -5,7 +5,7 @@ namespace SaraTort.BLL.Validations.Order;
 
 public class OrderForUpdateStatusValidation : AbstractValidator<OrderForUpdateStatusDto>
 {
-    public OrderForUpdateStatusValidation()
+    public OrderForUpdateStatusValidation()   
     {
         RuleFor(x => x.Id)
             .GreaterThan(0).WithMessage("Noto'g'ri buyurtma ID si kiritildi");

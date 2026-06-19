@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace SaraTort.BLL.DTOs.OrderItem;
 
 public class OrderItemForCreateDto

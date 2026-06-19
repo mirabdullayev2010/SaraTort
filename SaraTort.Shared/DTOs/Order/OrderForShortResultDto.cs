@@ -1,8 +1,9 @@
 ﻿using SaraTort.BLL.DTOs.OrderItem;
 using SaraTort.Domain.Enums;
-namespace SaraTort.BLL.DTOs.Order;
 
-public class OrderForResultDto
+namespace SaraTort.Shared.DTOs.Order;
+
+public class OrderForShortResultDto
 {
     public long Id { get; set; }
     public string CustomerName { get; set; }

@@ -5,11 +5,11 @@ namespace SaraTort.BLL.DTOs.Cake;
 
 public class CakeForResultDto
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string? ImageUrl { get; set; }
-    public int CategoryId { get; set; }
+    public long CategoryId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public List<CakeReviewForResultDto> Reviews { get; set; } = new();

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SaraTort.BLL.DTOs.Category;
+﻿namespace SaraTort.BLL.DTOs.Category;
 
 public class CategoryForCreateDto
 {

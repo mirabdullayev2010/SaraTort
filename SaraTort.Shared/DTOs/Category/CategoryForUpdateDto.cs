@@ -4,6 +4,7 @@ namespace SaraTort.BLL.DTOs.Category;
 
 public class CategoryForUpdateDto
 {
-    public string Name { get; set; } = string.Empty;
+    public long Id { get; set; }
+    public string Name { get; set; }
     public string? Description { get; set; }
 }

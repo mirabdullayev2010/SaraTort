@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SaraTort.BLL.DTOs.Cake;
-using SaraTort.BLL.DTOs.CakeOption;
 using SaraTort.BLL.DTOs.CakeReview;
 using SaraTort.BLL.DTOs.CartItem;
 using SaraTort.BLL.DTOs.Category;
@@ -41,10 +40,5 @@ public class MappingProfile : Profile
         CreateMap<CakeReview, CakeReviewForResultDto>();
         CreateMap<CakeReviewForCreateDto, CakeReview>();
         CreateMap<CakeReview, CakeReviewForResultDto>();
-
-        CreateMap<CakeOptionForCreateDto, CakeOption>();
-        CreateMap<CakeOption, CakeOptionForResultDto>();
-        CreateMap<CakeOptionForCreateDto, CakeOption>();
-        CreateMap<CakeOption, CakeOptionForResultDto>();
     }
 }

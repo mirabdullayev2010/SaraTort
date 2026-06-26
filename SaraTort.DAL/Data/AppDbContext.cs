@@ -10,7 +10,6 @@ public class AppDbContext : DbContext
     // Catalog
     public DbSet<Category> Category { get; set; }
     public DbSet<Cake> Cakes { get; set; }
-    public DbSet<CakeOption> CakeOptions { get; set; }
     public DbSet<CakeReview> CakeReviews { get; set; }
 
     // Orders
@@ -22,7 +21,6 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<CakeOption>().Property(o => o.Price).HasPrecision(18, 2);
         modelBuilder.Entity<Order>().Property(o => o.TotalAmount).HasPrecision(18, 2);
         modelBuilder.Entity<OrderItem>().Property(i => i.PriceAtPurchase).HasPrecision(18, 2);
     }

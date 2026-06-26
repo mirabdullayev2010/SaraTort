@@ -22,6 +22,5 @@ public class Cake : BaseEntity
     [Column("category")]
     public Category Category { get; set; } = null!;
 
-    public ICollection<CakeOption> Options { get; set; } = new List<CakeOption>();
     public ICollection<CakeReview> Reviews { get; set; } = new List<CakeReview>();
 }

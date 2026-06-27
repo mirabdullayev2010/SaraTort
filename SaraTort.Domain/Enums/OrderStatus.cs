@@ -2,10 +2,10 @@
 
 public enum OrderStatus
 {
-    Pending = 1,     // Kutilmoqda
-    Confirmed = 2,   // Tasdiqlandi (Tayyorlanmoqda)
-    Ready = 3,       // Tort tayyor
-    InDelivery = 4,  // Kuryer yo'lda
-    Delivered = 5,   // Yetkazib berildi
-    Cancelled = 6    // Bekor qilindi
+    Pending = 1,     
+    Confirmed = 2,
+    Ready = 3,       
+    InDelivery = 4,  
+    Delivered = 5,   
+    Cancelled = 6    
 }

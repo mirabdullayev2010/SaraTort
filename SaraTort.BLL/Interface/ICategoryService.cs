@@ -1,10 +1,9 @@
 ﻿using SaraTort.BLL.DTOs.Category;
-using SaraTort.BLL.Interfaces;
 using SaraTort.Domain.Entities.Catalog;
 
-namespace SaraTort.BLL.Interface;
+namespace SaraTort.BLL.Interfaces;
 
-public interface ICategoryService : ICrudService<Category, CategoryForCreateDto, CategoryForUpdateDto, CategoryForResultDto>
+public interface ICategoryService
+    : ICrudService<Category, CategoryForCreateDto, CategoryForUpdateDto, CategoryForResultDto>
 {
-
 }

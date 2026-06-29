@@ -1,12 +1,11 @@
-﻿using SaraTort.BLL.DTOs.Order;
-using SaraTort.BLL.DTOs.OrderItem;
-using SaraTort.BLL.Interfaces;
+﻿using SaraTort.BLL.DTOs.OrderItem;
+using SaraTort.Domain.Entities.Orders;
 using SaraTort.Domain.Entities.Orders;
 using SaraTort.Shared.DTOs.OrderItem;
 
-namespace SaraTort.BLL.Interface;
+namespace SaraTort.BLL.Interfaces;
 
 public interface IOrderItemService
+    : ICrudService<OrderItem, OrderItemForCreateDto, OrderItemForUpdateDto, OrderItemForResultDto>
 {
-
 }

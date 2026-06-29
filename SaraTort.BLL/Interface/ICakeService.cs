@@ -1,10 +1,9 @@
 ﻿using SaraTort.BLL.DTOs.Cake;
-using SaraTort.BLL.Interfaces;
 using SaraTort.Domain.Entities.Catalog;
 
-namespace SaraTort.BLL.Interface;
+namespace SaraTort.BLL.Interfaces;
 
-public interface ICakeService : ICrudService<Cake, CakeForCreateDto, CakeForUpdateDto, CakeForResultDto>
+public interface ICakeService
+    : ICrudService<Cake, CakeForCreateDto, CakeForUpdateDto, CakeForResultDto>
 {
-
 }

@@ -7,9 +7,6 @@ public class OrderItemForUpdateValidation : AbstractValidator<OrderItemForUpdate
 {
     public OrderItemForUpdateValidation()
     {
-        RuleFor(x => x.CakeOptionId)
-            .GreaterThan(0)
-            .WithMessage("CakeOptionId 0 dan katta bo'lishi kerak!");
         RuleFor(x => x.Quantity)
             .GreaterThan(0)
             .WithMessage("Quantity 0 dan katta bo'lishi kerak!");

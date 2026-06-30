@@ -10,9 +10,7 @@ public class OrderItemForCreateValidation : AbstractValidator <OrderItemForCreat
 {
     public OrderItemForCreateValidation()
     {
-        RuleFor(x => x.CakeOptionId)
-            .GreaterThan(0)
-            .WithMessage("CakeOptionId 0 dan katta bo'lishi gerekir!");
+   
         RuleFor(x => x.Quantity)
             .GreaterThan(0)
             .WithMessage("Quantity 0 dan katta bo'lishi gerekir!");

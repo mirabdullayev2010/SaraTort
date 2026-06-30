@@ -11,8 +11,7 @@ public class OrderItem
     public long OrderId { get; set; }
     [Column("order")]
     public Order Order { get; set; } = null!;
-    [Column("cake_option_id")]
-    public int CakeOptionId { get; set; }
+
     [Column("quantity")]
     public int Quantity { get; set; } 
     [Column("price_at_purchase")]

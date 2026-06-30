@@ -3,7 +3,6 @@
 public class OrderItemForResultDto
 {
     public long Id { get; set; }
-    public long CakeOptionId { get; set; }
     public int Quantity { get; set; }
 
     public decimal PriceAtPurchase { get; set; }

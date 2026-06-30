@@ -4,7 +4,6 @@ public class CartltemForShortResultDto
 {
     public long Id { get; set; }
     public string SessionId { get; set; }
-    public long CakeOptionId { get; set; }
     public int Quantity { get; set; }
 
     public string CakeName { get; set; }

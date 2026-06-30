@@ -15,13 +15,13 @@ public class AppDbContext : DbContext
     // Orders
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }    
+    public DbSet<orderItem> OrderItems { get; set; }    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Order>().Property(o => o.TotalAmount).HasPrecision(18, 2);
-        modelBuilder.Entity<OrderItem>().Property(i => i.PriceAtPurchase).HasPrecision(18, 2);
+        modelBuilder.Entity<orderItem>().Property(i => i.PriceAtPurchase).HasPrecision(18, 2);
     }
 }

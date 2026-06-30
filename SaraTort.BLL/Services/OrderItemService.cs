@@ -35,9 +35,9 @@ public class OrderItemService : IOrderItemService
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var OrderItem = _mapper.Map<OrderItem>(dto);
+        var OrderItem = _mapper.Map<orderItem>(dto);
 
-        await _unitOfWork.Repository<OrderItem>().AddAsync(OrderItem);
+        await _unitOfWork.Repository<orderItem>().AddAsync(OrderItem);
 
         await _unitOfWork.SaveAsync();
 
@@ -51,7 +51,7 @@ public class OrderItemService : IOrderItemService
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var OrderItem = await _unitOfWork.Repository<OrderItem>()
+        var OrderItem = await _unitOfWork.Repository<orderItem>()
             .GetAsync(x => x.Id == id);
 
         if (OrderItem is null)
@@ -59,33 +59,33 @@ public class OrderItemService : IOrderItemService
 
         _mapper.Map(dto, OrderItem);
 
-        _unitOfWork.Repository<OrderItem>().Update(OrderItem);
+        _unitOfWork.Repository<orderItem>().Update(OrderItem);
 
         return await _unitOfWork.SaveAsync();
     }
 
     public async Task<bool> DeleteAsync(long id)
     {
-        var OrderItem = await _unitOfWork.Repository<OrderItem>()
+        var OrderItem = await _unitOfWork.Repository<orderItem>()
             .GetAsync(x => x.Id == id);
 
         if (OrderItem is null)
             return false;
 
-        _unitOfWork.Repository<OrderItem>().Delete(OrderItem);
+        _unitOfWork.Repository<orderItem>().Delete(OrderItem);
 
         return await _unitOfWork.SaveAsync();
     }
 
     public async Task<OrderItemForResultDto> GetByIdAsync(long id)
     {
-        var OrderItem = await _unitOfWork.Repository<OrderItem>()
+        var OrderItem = await _unitOfWork.Repository<orderItem>()
             .GetAsync(
                 x => x.Id == id,
                 includes: new[]
                 {
-                    nameof(OrderItem),
-                    nameof(OrderItem)
+                    nameof(orderItem),
+                    nameof(orderItem)
                 });
 
         if (OrderItem is null)
@@ -96,12 +96,12 @@ public class OrderItemService : IOrderItemService
 
     public async Task<IEnumerable<OrderItemForResultDto>> GetAllAsync()
     {
-        var OrderItems = await _unitOfWork.Repository<OrderItem>()
+        var OrderItems = await _unitOfWork.Repository<orderItem>()
             .GetAllAsync(
                 includes: new[]
                 {
-                    nameof(OrderItem),
-                    nameof(OrderItem)
+                    nameof(orderItem),
+                    nameof(orderItem)
                 });
 
         return _mapper.Map<IEnumerable<OrderItemForResultDto>>(OrderItems);

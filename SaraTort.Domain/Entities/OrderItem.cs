@@ -3,7 +3,7 @@
 namespace SaraTort.Domain.Entities.Orders;
 
 [Table("OrderItems")]
-public class OrderItem
+public class orderItem
 {
     [Column("id")]
     public long Id { get; set; }

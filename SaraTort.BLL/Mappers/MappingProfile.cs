@@ -31,10 +31,10 @@ public class MappingProfile : Profile
         CreateMap<OrderForCreateDto, Order>();
         CreateMap<Order, OrderForResultDto>();
 
-        CreateMap<OrderItemForCreateDto, OrderItem>();
-        CreateMap<OrderItem, OrderItemForResultDto>();
-        CreateMap<OrderItemForCreateDto, OrderItem>();
-        CreateMap<OrderItem, OrderItemForResultDto>();
+        CreateMap<OrderItemForCreateDto, orderItem>();
+        CreateMap<orderItem, OrderItemForResultDto>();
+        CreateMap<OrderItemForCreateDto, orderItem>();
+        CreateMap<orderItem, OrderItemForResultDto>();
 
         CreateMap<CakeReviewForCreateDto, CakeReview>();
         CreateMap<CakeReview, CakeReviewForResultDto>();

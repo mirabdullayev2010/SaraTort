@@ -25,5 +25,5 @@ public class Order : BaseEntity
     public OrderStatus Status { get; set; } = OrderStatus.Pending;
     public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Pending;
 
-    public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public ICollection<orderItem> OrderItems { get; set; } = new List<orderItem>();
 }

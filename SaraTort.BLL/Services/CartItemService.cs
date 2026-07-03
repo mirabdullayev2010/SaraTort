@@ -20,7 +20,7 @@ public class CartItemService : ICartItemService
         IValidator<CartItemForCreateDto> createValidator,
         IValidator<CartItemForUpdateDto> updateValidator)
     {
-        _unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork; 
         _mapper = mapper;
         _createValidator = createValidator;
         _updateValidator = updateValidator;

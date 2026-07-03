@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using SaraTort.BLL.DTOs.Category;
 using SaraTort.BLL.DTOs.Order;
 using SaraTort.BLL.Interfaces;
 using SaraTort.DAL.Interfaces;
-using SaraTort.Domain.Entities.Catalog;
 using SaraTort.Domain.Entities.Orders;
 
 namespace SaraTort.BLL.Services;

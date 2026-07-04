@@ -1,0 +1,88 @@
+﻿using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+using System.Text;
+
+namespace SaraTort.WebApi.Configurations;
+
+public static class AuthConfiguration
+{
+    public static IServiceCollection AddCorsConfiguration(
+        this IServiceCollection services)
+        => services.AddCors(o
+            => o.AddPolicy(
+                name: "AllowAll",
+                policy => policy
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()));
+
+    public static IServiceCollection AddSwaggerConfiguration(
+        this IServiceCollection services)
+        => services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc(
+                name: "v1",
+                info: new OpenApiInfo
+                {
+                    Title = "Smart Restourant Api",
+                    Version = "v1"
+                });
+
+            c.AddSecurityDefinition(
+                name: "Bearer",
+                securityScheme: new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "Jwt Authorization header using the Bearer scheme.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference()
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] { }
+                }
+            });
+
+            c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+        });
+
+    public static IServiceCollection AddJwtConfiguration(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(o =>
+        {
+            var key = Encoding.UTF8.GetBytes(configuration["JWT:Secret"]);
+            o.SaveToken = true;
+            o.RequireHttpsMetadata = false;
+            o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = configuration["JWT:Issuer"],
+                ValidAudience = configuration["JWT:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ClockSkew = TimeSpan.FromMinutes(5)
+            };
+        });
+
+        return services;
+    }
+}

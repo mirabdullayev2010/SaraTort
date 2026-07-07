@@ -5,6 +5,6 @@ using SaraTort.Shared.DTOs.OrderItem;
 namespace SaraTort.BLL.Interfaces;
 
 public interface IOrderItemService
-    : ICrudService<orderItem, OrderItemForCreateDto, OrderItemForUpdateDto, OrderItemForResultDto>
+    : ICroudService<orderItem, OrderItemForCreateDto, OrderItemForUpdateDto, OrderItemForResultDto>
 {
 }

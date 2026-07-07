@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using SaraTort.BLL.Interface;
+using SaraTort.Shared.DTOs.User;
 
 namespace Restourant.WebApi.Controllers.Auth;
 
@@ -11,9 +13,9 @@ public class AuthController(
     private readonly IUserService _service = service;
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(UserForLoginDto request)
+    public async Task<IActionResult> Login(UserForResultDto request)
     {
-        try
+        try 
         {
             string result = await _service.LoginAsync(request);
             return Ok(result);

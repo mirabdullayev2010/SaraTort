@@ -3,7 +3,6 @@ using SaraTort.Domain.Entities.Catalog;
 
 namespace SaraTort.BLL.Interfaces;
 
-public interface ICakeService
-    : ICrudService<Cake, CakeForCreateDto, CakeForUpdateDto, CakeForResultDto>
+public interface ICakeService : ICroudService<Cake, CakeForCreateDto, CakeForUpdateDto, CakeForResultDto>
 {
 }

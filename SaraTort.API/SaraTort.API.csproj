@@ -24,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SaraTort.DAL\SaraTort.DAL.csproj" />
+    <ProjectReference Include="..\SaraTort.BLL\SaraTort.BLL.csproj" />
+    <ProjectReference Include="..\SaraTort.Domain\SaraTort.Domain.csproj" />
+    <ProjectReference Include="..\SaraTort.Shared\SaraTort.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

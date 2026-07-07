@@ -5,6 +5,6 @@ using SaraTort.Shared.DTOs.CakeRaview;
 namespace SaraTort.BLL.Interfaces;
 
 public interface ICakeReviewService
-    : ICrudService<CakeReview, CakeReviewForCreateDto, CakeReviewForUpdateDto, CakeReviewForResultDto>
+    : ICroudService<CakeReview, CakeReviewForCreateDto, CakeReviewForUpdateDto, CakeReviewForResultDto>
 {
 }

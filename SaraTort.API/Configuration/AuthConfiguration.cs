@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models; // TO'G'RILANDI: .Models qo'shildi
 using System.Text;
 
-namespace SaraTort.WebApi.Configurations;
+namespace SaraTort.API.Configurations;
 
 public static class AuthConfiguration
 {
@@ -23,9 +24,9 @@ public static class AuthConfiguration
         {
             c.SwaggerDoc(
                 name: "v1",
-                info: new OpenApiInfo
+                info: new OpenApiInfo // Endi xato bermaydi
                 {
-                    Title = "Smart Restourant Api",
+                    Title = "Smart Restaurant Api",
                     Version = "v1"
                 });
 
@@ -36,15 +37,16 @@ public static class AuthConfiguration
                     Name = "Authorization",
                     Description = "Jwt Authorization header using the Bearer scheme.",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
                 });
 
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference()
+                        Reference = new OpenApiReference
                         {
                             Type = ReferenceType.SecurityScheme,
                             Id = "Bearer"
@@ -68,10 +70,12 @@ public static class AuthConfiguration
         })
         .AddJwtBearer(o =>
         {
-            var key = Encoding.UTF8.GetBytes(configuration["JWT:Secret"]);
+            var secretKey = configuration["JWT:Secret"] ?? "SizningMaxfiyKalitingizKamida16TaBelgiBo'lishiKerek";
+            var key = Encoding.UTF8.GetBytes(secretKey);
+
             o.SaveToken = true;
             o.RequireHttpsMetadata = false;
-            o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            o.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,

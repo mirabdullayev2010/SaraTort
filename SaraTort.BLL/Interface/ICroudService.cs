@@ -1,6 +1,6 @@
 ﻿namespace SaraTort.BLL.Interfaces;
 
-public interface ICrudService<TModel, TCreateDto, TUpdateDto, TResultDto>
+public interface ICroudService<TModel, TCreateDto, TUpdateDto, TResultDto>
     where TModel : class
     where TCreateDto : class
     where TUpdateDto : class

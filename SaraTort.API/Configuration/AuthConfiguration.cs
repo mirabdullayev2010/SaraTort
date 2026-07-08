@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using Microsoft.OpenApi.Models; // TO'G'RILANDI: .Models qo'shildi
 using System.Text;
 
 namespace SaraTort.API.Configurations;

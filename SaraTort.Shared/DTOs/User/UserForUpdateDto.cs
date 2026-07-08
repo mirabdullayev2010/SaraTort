@@ -2,9 +2,15 @@
 
 public class UserForUpdateDto
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Password { get; set; }
-    public string PhoneNumber { get; set; }
+    public long Id { get; set; }
+
+    public string FirstName { get; set; } = string.Empty;
+
+    public string LastName { get; set; } = string.Empty;
+
+    public string PhoneNumber { get; set; } = string.Empty;
+
+    public string Password { get; set; } = string.Empty;
+
     public int Age { get; set; }
 }

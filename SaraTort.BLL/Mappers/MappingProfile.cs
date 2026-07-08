@@ -5,8 +5,10 @@ using SaraTort.BLL.DTOs.CartItem;
 using SaraTort.BLL.DTOs.Category;
 using SaraTort.BLL.DTOs.Order;
 using SaraTort.BLL.DTOs.OrderItem;
+using SaraTort.Domain.Entities;
 using SaraTort.Domain.Entities.Catalog;
 using SaraTort.Domain.Entities.Orders;
+using SaraTort.Shared.DTOs.User;
 
 namespace SaraTort.BLL.Mappers;
 
@@ -40,5 +42,10 @@ public class MappingProfile : Profile
         CreateMap<CakeReview, CakeReviewForResultDto>();
         CreateMap<CakeReviewForCreateDto, CakeReview>();
         CreateMap<CakeReview, CakeReviewForResultDto>();
+
+        CreateMap<UserForCreateDto, User>();
+        CreateMap<User, UserForResultDto>();
+        CreateMap<UserForCreateDto, User>();
+        CreateMap<User, UserForResultDto>();
     }
 }

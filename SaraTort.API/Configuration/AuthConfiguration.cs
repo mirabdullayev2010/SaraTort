@@ -1,66 +1,49 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
+using Microsoft.AspNetCore.OpenApi;
 using System.Text;
 
-namespace SaraTort.API.Configurations;
+namespace SaraTort.API.Configuration;
 
 public static class AuthConfiguration
 {
-    public static IServiceCollection AddCorsConfiguration(
-        this IServiceCollection services)
-        => services.AddCors(o
-            => o.AddPolicy(
+    // 1. CORS sozlamasi
+    public static IServiceCollection AddCorsConfiguration(this IServiceCollection services)
+        => services.AddCors(o => o.AddPolicy(
                 name: "AllowAll",
                 policy => policy
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader()));
 
-    public static IServiceCollection AddSwaggerConfiguration(
-        this IServiceCollection services)
-        => services.AddSwaggerGen(c =>
+    // 2. .NET 9 dagi OpenApi uchun JWT Tugmasini sozlash (Xatosiz variant)
+    public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services)
+    {
+        services.ConfigureOpenApi(options =>
         {
-            c.SwaggerDoc(
-                name: "v1",
-                info: new OpenApiInfo // Endi xato bermaydi
-                {
-                    Title = "Smart Restaurant Api",
-                    Version = "v1"
-                });
-
-            c.AddSecurityDefinition(
-                name: "Bearer",
-                securityScheme: new OpenApiSecurityScheme
-                {
-                    Name = "Authorization",
-                    Description = "Jwt Authorization header using the Bearer scheme.",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                });
-
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            options.AddDocumentTransformer((document, context, cancellationToken) =>
             {
+                var requirement = new OpenApiSecurityRequirement
                 {
-                    new OpenApiSecurityScheme
+                    [new OpenApiSecurityScheme
                     {
                         Reference = new OpenApiReference
                         {
                             Type = ReferenceType.SecurityScheme,
                             Id = "Bearer"
                         }
-                    },
-                    new string[] { }
-                }
+                    }] = Array.Empty<string>()
+                };
+                document.SecurityRequirements.Add(requirement);
+                return Task.CompletedTask;
             });
-
-            c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
         });
 
-    public static IServiceCollection AddJwtConfiguration(
-        this IServiceCollection services,
-        IConfiguration configuration)
+        return services;
+    }
+
+    // 3. JWT sozlamasi
+    public static IServiceCollection AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuthentication(x =>
         {
@@ -69,7 +52,7 @@ public static class AuthConfiguration
         })
         .AddJwtBearer(o =>
         {
-            var secretKey = configuration["JWT:Secret"] ?? "SizningMaxfiyKalitingizKamida16TaBelgiBo'lishiKerek";
+            var secretKey = configuration["JWT:Secret"] ?? "SizningMaxfiyKalitingizKamida32TaBelgiBolishiKerek";
             var key = Encoding.UTF8.GetBytes(secretKey);
 
             o.SaveToken = true;

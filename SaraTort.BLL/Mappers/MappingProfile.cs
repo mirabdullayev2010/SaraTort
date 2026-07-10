@@ -19,14 +19,17 @@ public class MappingProfile : Profile
         CreateMap<CategoryForCreateDto, Category>();
         CreateMap<CategoryForUpdateDto, Category>();
         CreateMap<Category, CategoryForResultDto>();
-                                                                                                                           
+        CreateMap<CategoryForResultDto, Category>();
+
         CreateMap<CakeForCreateDto, Cake>();
         CreateMap<CakeForUpdateDto, Cake>();
         CreateMap<Cake, CakeForResultDto>();
+        CreateMap<CakeForResultDto, Cake>();
 
         CreateMap<CartItemForCreateDto, CartItem>();
         CreateMap<CartItemForUpdateDto, CartItem>();
         CreateMap<CartItem, CartItemForResultDto>();
+        CreateMap<CartItemForResultDto, CartItem>();
 
         CreateMap<OrderForCreateDto, Order>();
         CreateMap<Order, OrderForResultDto>();

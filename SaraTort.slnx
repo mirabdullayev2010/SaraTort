@@ -1,6 +1,5 @@
 <Solution>
   <Project Path="SaraTort.Admin/SaraTort.Admin.csproj" />
-  <Project Path="SaraTort.API/SaraTort.API.csproj" />
   <Project Path="SaraTort.BLL/SaraTort.BLL.csproj" />
   <Project Path="SaraTort.DAL/SaraTort.DAL.csproj" />
   <Project Path="SaraTort.Domain/SaraTort.Domain.csproj" />

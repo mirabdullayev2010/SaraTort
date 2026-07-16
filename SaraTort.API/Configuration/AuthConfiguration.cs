@@ -16,7 +16,6 @@ public static class AuthConfiguration
                     .AllowAnyMethod()
                     .AllowAnyHeader()));
 
-    // 2. .NET 9 dagi OpenApi uchun JWT Tugmasini sozlash (Xatosiz variant)
     public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services)
     {
         services.ConfigureOpenApi(options =>

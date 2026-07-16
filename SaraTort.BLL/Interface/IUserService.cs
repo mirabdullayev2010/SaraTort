@@ -6,7 +6,5 @@ namespace SaraTort.BLL.Interface;
 
 public interface IUserService : ICroudService<User, UserForCreateDto, UserForUpdateDto, UserForResultDto>
 {
-    Task<string> LoginAsync(UserForResultDto request);
-    Task<string> AddSwaggerGen(UserForResultDto request);
-     
+    Task<string> LoginAsync(UserForResultDto request);     
 }

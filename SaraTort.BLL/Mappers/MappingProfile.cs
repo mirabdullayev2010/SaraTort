@@ -31,9 +31,9 @@ public class MappingProfile : Profile
         CreateMap<CartItem, CartItemForResultDto>();
         CreateMap<CartItemForResultDto, CartItem>();
 
-        CreateMap<OrderForCreateDto, Order>();
+        CreateMap<OrderForResultDtoDto, Order>();
         CreateMap<Order, OrderForResultDto>();
-        CreateMap<OrderForCreateDto, Order>();
+        CreateMap<OrderForResultDtoDto, Order>();
         CreateMap<Order, OrderForResultDto>();
 
         CreateMap<OrderItemForCreateDto, orderItem>();

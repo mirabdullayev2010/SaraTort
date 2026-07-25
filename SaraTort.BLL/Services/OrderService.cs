@@ -11,13 +11,13 @@ public class OrderService : IOrderService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly IValidator<OrderForCreateDto> _createValidator;
+    private readonly IValidator<OrderForResultDtoDto> _createValidator;
     private readonly IValidator<OrderForUpdateDto> _updateValidator;
 
     public OrderService(
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IValidator<OrderForCreateDto> createValidator,
+        IValidator<OrderForResultDtoDto> createValidator,
         IValidator<OrderForUpdateDto> updateValidator)
     {
         _unitOfWork = unitOfWork;
@@ -26,7 +26,7 @@ public class OrderService : IOrderService
         _updateValidator = updateValidator;
     }
 
-    public async Task<long> CreateAsync(OrderForCreateDto dto)
+    public async Task<long> CreateAsync(OrderForResultDtoDto dto)
     {
         var validationResult = await _createValidator.ValidateAsync(dto);
         if (!validationResult.IsValid)

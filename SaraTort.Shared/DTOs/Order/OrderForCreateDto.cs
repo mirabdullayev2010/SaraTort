@@ -2,7 +2,7 @@
 
 namespace SaraTort.BLL.DTOs.Order;
 
-public class OrderForCreateDto
+public class OrderForResultDtoDto
 {
     public string CustomerName { get; set; }
     public string CustomerPhone { get; set; }

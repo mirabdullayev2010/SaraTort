@@ -7,9 +7,6 @@ public class CakeForUpdateValidator : AbstractValidator<CakeForUpdateDto>
 {
     public CakeForUpdateValidator()
     {
-        RuleFor(x => x.Id)
-            .GreaterThan(0)
-            .WithMessage("Tort ID si noto'g'ri.");
 
         RuleFor(x => x.Name)
             .NotEmpty()

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
 
@@ -30,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SaraTort.DAL\SaraTort.DAL.csproj" />
+    <ProjectReference Include="..\SaraTort.Shared\SaraTort.Shared.csproj" />
   </ItemGroup>
 
 </Project>

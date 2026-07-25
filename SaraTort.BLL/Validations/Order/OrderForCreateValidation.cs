@@ -3,7 +3,7 @@ using SaraTort.BLL.DTOs.Order;
 
 namespace SaraTort.BLL.Validations.Order;
 
-public class OrderForCreateValidation : AbstractValidator<OrderForCreateDto>
+public class OrderForCreateValidation : AbstractValidator<OrderForResultDtoDto>
 {
     public OrderForCreateValidation()
     {

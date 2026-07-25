@@ -1,0 +1,849 @@
+﻿@model SaraTort.Admin.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Sara Tort - Admin Panel";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="uz" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sara Tort | Control Panel</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+            :root {
+                --primary-glow: #ff375f;
+                --secondary-glow: #bf5af2;
+                /* ULTRA-SHAFFOF VIZUAL PARAMETRLAR */
+                --glass-bg: rgba(255, 255, 255, 0.03);
+                --glass-card: rgba(18, 18, 28, 0.25); /* Ultra-shaffof shisha */
+                --glass-border: rgba(255, 255, 255, 0.15);
+                --glass-border-glow: rgba(255, 255, 255, 0.35);
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif;
+                color: #f1f5f9;
+                overflow-x: hidden;
+                margin: 0;
+                min-height: 100vh;
+                transition: background 0.5s ease;
+                background-attachment: fixed !important;
+                background-size: cover !important;
+            }
+
+                /* DEFAULT BACKGROUND PRESETS */
+                body.bg-theme-1 {
+                    background: radial-gradient(circle at 10% 20%, rgba(255, 55, 95, 0.25) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(191, 90, 242, 0.25) 0%, transparent 50%), #050508;
+                }
+
+                body.bg-theme-2 {
+                    background: radial-gradient(circle at 50% 10%, rgba(0, 198, 255, 0.3) 0%, transparent 60%), radial-gradient(circle at 80% 90%, rgba(0, 114, 255, 0.3) 0%, transparent 60%), #020b18;
+                }
+
+                body.bg-theme-3 {
+                    background: radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 217, 61, 0.25) 0%, transparent 50%), #0d0314;
+                }
+
+                body.bg-theme-4 {
+                    background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.3) 0%, transparent 70%), radial-gradient(circle at 10% 90%, rgba(236, 72, 153, 0.25) 0%, transparent 50%), #0a0512;
+                }
+
+                body.bg-theme-5 {
+                    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+                }
+
+            /* JONLI PARTICLES CANVAS */
+            #bg-particles {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: 0;
+                pointer-events: none;
+            }
+
+            /* ULTRA SHAFFOF IOS SIDEBAR */
+            .sidebar {
+                width: 280px;
+                background: rgba(10, 10, 18, 0.2); /* Juda yuqori shaffoflik */
+                backdrop-filter: blur(40px) saturate(200%);
+                -webkit-backdrop-filter: blur(40px) saturate(200%);
+                border-right: 1px solid var(--glass-border);
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 100;
+            }
+
+            .brand-header {
+                padding: 24px;
+                border-bottom: 1px solid var(--glass-border);
+            }
+
+            .brand-logo-icon {
+                width: 45px;
+                height: 45px;
+                background: rgba(255, 55, 95, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                color: white;
+                box-shadow: 0 8px 25px rgba(255, 55, 95, 0.25);
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-section-label {
+                font-size: 10px;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                color: rgba(255, 255, 255, 0.45);
+                padding: 16px 24px 8px 24px;
+            }
+
+            .nav-link-custom {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding: 12px 20px;
+                margin: 4px 12px;
+                border-radius: 16px;
+                color: rgba(255, 255, 255, 0.75);
+                font-size: 14px;
+                font-weight: 600;
+                text-decoration: none;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                background: transparent;
+                border: 1px solid transparent;
+            }
+
+                .nav-link-custom:hover, .nav-link-custom.active {
+                    color: #ffffff;
+                    background: rgba(255, 255, 255, 0.1);
+                    backdrop-filter: blur(15px);
+                    border-color: rgba(255, 255, 255, 0.2);
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                }
+
+                .nav-link-custom i {
+                    width: 20px;
+                    text-align: center;
+                    font-size: 16px;
+                }
+
+            /* MAIN WRAPPER */
+            .main-wrapper {
+                margin-left: 280px;
+                padding: 32px;
+                position: relative;
+                z-index: 10;
+            }
+
+            /* ULTRA-SHAFFOF IOS LIQUID GLASS CARD */
+            .glass-card {
+                background: var(--glass-card);
+                backdrop-filter: blur(35px) saturate(200%);
+                -webkit-backdrop-filter: blur(35px) saturate(200%);
+                border: 1px solid var(--glass-border);
+                border-radius: 24px;
+                padding: 24px;
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+                .glass-card:hover {
+                    border-color: var(--glass-border-glow);
+                    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.08);
+                    transform: translateY(-2px);
+                }
+
+            .icon-avatar {
+                width: 48px;
+                height: 48px;
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                backdrop-filter: blur(10px);
+            }
+
+            .cyber-search {
+                background: rgba(255, 255, 255, 0.06);
+                backdrop-filter: blur(20px);
+                border: 1px solid var(--glass-border);
+                border-radius: 16px;
+                padding: 10px 18px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: rgba(255, 255, 255, 0.6);
+                transition: all 0.3s ease;
+            }
+
+                .cyber-search:focus-within {
+                    border-color: rgba(255, 55, 95, 0.6);
+                    background: rgba(255, 255, 255, 0.12);
+                    box-shadow: 0 0 20px rgba(255, 55, 95, 0.25);
+                }
+
+                .cyber-search input {
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                    color: #fff;
+                    font-size: 14px;
+                }
+
+            /* SHAFFOF JADVAL */
+            .table-cyber {
+                border-collapse: separate;
+                border-spacing: 0 8px;
+            }
+
+                .table-cyber th {
+                    color: rgba(255, 255, 255, 0.45);
+                    font-size: 11px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    border: none;
+                    padding: 12px 16px;
+                }
+
+                .table-cyber td {
+                    background: rgba(255, 255, 255, 0.04);
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    padding: 16px;
+                    vertical-align: middle;
+                    border-top: 1px solid rgba(255, 255, 255, 0.08);
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                    font-size: 14px;
+                }
+
+                .table-cyber tr td:first-child {
+                    border-top-left-radius: 16px;
+                    border-bottom-left-radius: 16px;
+                    border-left: 1px solid rgba(255, 255, 255, 0.08);
+                }
+
+                .table-cyber tr td:last-child {
+                    border-top-right-radius: 16px;
+                    border-bottom-right-radius: 16px;
+                    border-right: 1px solid rgba(255, 255, 255, 0.08);
+                }
+
+            .text-pink {
+                color: #ff375f !important;
+            }
+
+            .btn-ios-primary {
+                background: linear-gradient(135deg, rgba(255, 55, 95, 0.85), rgba(191, 90, 242, 0.85));
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: white;
+                font-weight: 600;
+                border-radius: 16px;
+                box-shadow: 0 8px 25px rgba(255, 55, 95, 0.3);
+                transition: all 0.3s ease;
+            }
+
+                .btn-ios-primary:hover {
+                    opacity: 0.95;
+                    transform: scale(1.02);
+                    box-shadow: 0 10px 30px rgba(255, 55, 95, 0.5);
+                }
+
+            /* MODALLAR IOS GLASS */
+            .modal-content-ios {
+                background: rgba(20, 20, 30, 0.55) !important;
+                backdrop-filter: blur(45px) saturate(210%) !important;
+                -webkit-backdrop-filter: blur(45px) saturate(210%) !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                border-radius: 28px !important;
+                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6) !important;
+                color: #fff;
+            }
+
+            .ios-input {
+                background: rgba(255, 255, 255, 0.07) !important;
+                border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                color: #fff !important;
+                border-radius: 14px !important;
+                padding: 12px 16px !important;
+                backdrop-filter: blur(10px);
+            }
+
+                .ios-input:focus {
+                    background: rgba(255, 255, 255, 0.15) !important;
+                    border-color: #ff375f !important;
+                    box-shadow: 0 0 15px rgba(255, 55, 95, 0.3) !important;
+                }
+
+            /* FON TANLASH KARTALARI */
+            .bg-picker-card {
+                height: 70px;
+                border-radius: 16px;
+                cursor: pointer;
+                border: 2px solid transparent;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+                .bg-picker-card:hover {
+                    transform: scale(1.04);
+                    border-color: rgba(255, 255, 255, 0.5);
+                }
+
+                .bg-picker-card.active {
+                    border-color: #ff375f;
+                    box-shadow: 0 0 20px rgba(255, 55, 95, 0.6);
+                }
+    </style>
+</head>
+<body class="bg-theme-1">
+
+    <!-- CANVAS PARTICLES -->
+    <canvas id="bg-particles"></canvas>
+
+    <div class="d-flex">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div>
+                <div class="brand-header d-flex align-items-center gap-3">
+                    <div class="brand-logo-icon">
+                        <i class="fa-solid fa-cake-candles"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-extrabold text-white mb-0" style="letter-spacing: 0.5px;">SARA TORT</h6>
+                        <small class="text-secondary" style="font-size: 10px;"><i class="fa-solid fa-shield-halved text-danger me-1"></i> Control System</small>
+                    </div>
+                </div>
+
+                <div class="nav-section-label"><i class="fa-solid fa-compass me-1"></i> Asosiy Menyular</div>
+                <nav>
+                    <a href="#" class="nav-link-custom active">
+                        <i class="fa-solid fa-chart-pie text-pink"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-link-custom">
+                        <i class="fa-solid fa-cake-candles text-warning"></i>
+                        <span>Tortlar Katalogi</span>
+                    </a>
+                    <a href="#" class="nav-link-custom">
+                        <i class="fa-solid fa-users text-info"></i>
+                        <span>Mijozlar Bazasi</span>
+                    </a>
+                </nav>
+
+                <div class="nav-section-label"><i class="fa-solid fa-sliders me-1"></i> Tizim & Boshqaruv</div>
+                <nav>
+                    <!-- NASTROYKA TUGMASI (MODAL CHAQIRADI) -->
+                    <a href="#" class="nav-link-custom" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                        <i class="fa-solid fa-gear text-secondary"></i>
+                        <span>Tizim Sozlamalari</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="p-3">
+                <!-- FILIALLAR ALOQA KARTASI -->
+                <div class="glass-card mb-3 p-3" style="border-radius: 20px;">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <div class="icon-avatar text-success" style="width: 36px; height: 36px; font-size: 14px;">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-white mb-0" style="font-size: 12px;">Filiallar Telefonlari</h6>
+                            <p class="text-secondary mb-0" style="font-size: 10px;">Buyurtmalar uchun</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2">
+                        <!-- Farg'ona -->
+                        <div class="p-2 rounded-3" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <small class="text-warning fw-bold" style="font-size: 11px;">Farg'ona filiali</small>
+                                <button class="btn btn-sm text-secondary p-0 border-0" data-bs-toggle="modal" data-bs-target="#editFerganaPhoneModal">
+                                    <i class="fa-solid fa-pen" style="font-size: 10px;"></i>
+                                </button>
+                            </div>
+                            <div class="fw-bold text-white" style="font-size: 12px;">+998 (95) 232-00-03</div>
+                        </div>
+
+                        <!-- Marg'ilon -->
+                        <div class="p-2 rounded-3" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <small class="text-info fw-bold" style="font-size: 11px;">Marg'ilon filiali</small>
+                                <button class="btn btn-sm text-secondary p-0 border-0" data-bs-toggle="modal" data-bs-target="#editMargilanPhoneModal">
+                                    <i class="fa-solid fa-pen" style="font-size: 10px;"></i>
+                                </button>
+                            </div>
+                            <div class="fw-bold text-white" style="font-size: 12px;">+998 (95) 631-00-03</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Profile -->
+                <div class="glass-card d-flex align-items-center gap-3 p-3" style="border-radius: 18px;">
+                    <div class="rounded-circle bg-pink text-white fw-bold d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; font-size: 14px; box-shadow: 0 0 15px rgba(255, 55, 95, 0.5);">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold text-white" style="font-size: 13px;">Administrator</h6>
+                        <small class="text-success fw-bold" style="font-size: 10px;"><i class="fa-solid fa-circle me-1" style="font-size: 6px;"></i> Onlayn</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-wrapper flex-grow-1">
+            <!-- Header -->
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <div>
+                    <h3 class="fw-extrabold text-white mb-1"><i class="fa-solid fa-wand-magic-sparkles text-pink me-2"></i>Boshqaruv Paneli</h3>
+                    <p class="text-secondary mb-0" style="font-size: 14px;">Tortlar katalogini boshqarish va yangi mahsulotlar qo'shish</p>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <div class="cyber-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Tort nomi bo'yicha qidiruv...">
+                    </div>
+                    <button class="btn btn-ios-primary px-4 py-2 d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addCakeModal">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span>Yangi Tort Qo'shish</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STATISTIKA KARTALARI -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="glass-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <span class="text-secondary font-bold" style="font-size: 11px; letter-spacing: 1px;">KATALOGDAGI TORTLAR</span>
+                            <div class="icon-avatar text-warning">
+                                <i class="fa-solid fa-cake-candles"></i>
+                            </div>
+                        </div>
+                        <h2 class="fw-extrabold text-white mb-1">@Model.KatalogdagiTortlarSoni xil</h2>
+                        <small class="text-warning fw-bold"><i class="fa-solid fa-check-circle me-1"></i> Menyudagi tortlar</small>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="glass-card">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <span class="text-secondary font-bold" style="font-size: 11px; letter-spacing: 1px;">FAOL MIJOZLAR</span>
+                            <div class="icon-avatar text-pink">
+                                <i class="fa-solid fa-heart-pulse"></i>
+                            </div>
+                        </div>
+                        <h2 class="fw-extrabold text-white mb-1">@Model.FaolMijozlarSoni ta</h2>
+                        <small class="text-secondary fw-bold"><i class="fa-solid fa-users me-1"></i> Jami mijozlar bazasi</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JADVAL -->
+            <div class="glass-card mb-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h5 class="fw-bold text-white mb-0">
+                            <i class="fa-solid fa-cake-candles text-pink me-2"></i>Katalogdagi Tortlar
+                        </h5>
+                        <small class="text-secondary">Bazaga qo'shilgan barcha tortlar ro'yxati</small>
+                    </div>
+                    <span class="badge bg-pink bg-opacity-20 text-pink px-3 py-2 rounded-pill fw-bold" style="border: 1px solid rgba(255, 55, 95, 0.4);">
+                        Jami: @(Model.TortlarRoyxati?.Count ?? 0) ta
+                    </span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-cyber mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;" class="text-center">#</th>
+                                <th style="width: 80px;">Rasm</th>
+                                <th>Tort Nomi</th>
+                                <th>Tavsif</th>
+                                <th>Narxi</th>
+                                <th class="text-end">Amallar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.TortlarRoyxati != null && Model.TortlarRoyxati.Any())
+                            {
+                                int index = 1;
+                                @foreach (var cake in Model.TortlarRoyxati)
+                                {
+                                    <tr>
+                                        <td class="text-center fw-bold text-secondary">@(index++)</td>
+                                        <td>
+                                            <img src="@cake.ImageUrl" alt="@cake.Title"
+                                                 style="width: 52px; height: 52px; object-fit: cover; border-radius: 14px; border: 1px solid rgba(255,255,255,0.2);"
+                                                 onerror="this.onerror=null; this.src='/images/default-cake.png';" />
+                                        </td>
+                                        <td class="fw-bold text-white">@cake.Title</td>
+                                        <td class="text-secondary" style="max-width: 250px; font-size: 13px;">
+                                            @(string.IsNullOrEmpty(cake.Description) ? "Tavsif kiritilmagan" : cake.Description)
+                                        </td>
+                                        <td class="fw-bold text-pink">@cake.Price.ToString("N0") UZS</td>
+                                        <td class="text-end">
+                                            <button class="btn btn-sm btn-outline-warning rounded-3 me-1 px-3 py-2"
+                                                    style="border-color: rgba(255, 204, 0, 0.4); background: rgba(255, 204, 0, 0.1);"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editCakeModal-@cake.Id">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </button>
+
+                                            <button class="btn btn-sm btn-outline-danger rounded-3 px-3 py-2"
+                                                    style="border-color: rgba(255, 59, 48, 0.4); background: rgba(255, 59, 48, 0.1);"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteCakeModal-@cake.Id">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-5">
+                                        <i class="fa-solid fa-box-open me-2 fs-4 mb-2 d-block"></i>
+                                        Hozircha tortlar qo'shilmagan. Yuqoridagi "Yangi Tort Qo'shish" tugmasini bosing.
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- TIZIM SOZLAMALARI (SETTINGS & FON O'ZGARTIRISH) MODALI -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modal-content-ios p-2">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">
+                        <i class="fa-solid fa-sliders text-pink me-2"></i>Tizim Sozlamalari
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body d-flex flex-column gap-4">
+                    <div>
+                        <h6 class="fw-bold text-white mb-1"><i class="fa-solid fa-palette me-2 text-warning"></i>Orqa Fonni Tanlang (Background Presets)</h6>
+                        <p class="text-secondary small mb-3">Tizim ko'rinishini o'zingizga mos ravishda shaffof va zamonaviy fonlar bilan sozlang:</p>
+
+                        <div class="row g-3">
+                            <!-- Theme 1 -->
+                            <div class="col-6 col-md-4">
+                                <div class="bg-picker-card bg-theme-1 active d-flex align-items-center justify-content-center p-2" onclick="changeTheme('bg-theme-1', this)">
+                                    <span class="fw-bold text-white fs-7 text-shadow"><i class="fa-solid fa-sparkles me-1"></i> iOS Pink Aurora</span>
+                                </div>
+                            </div>
+                            <!-- Theme 2 -->
+                            <div class="col-6 col-md-4">
+                                <div class="bg-picker-card bg-theme-2 d-flex align-items-center justify-content-center p-2" onclick="changeTheme('bg-theme-2', this)">
+                                    <span class="fw-bold text-white fs-7 text-shadow"><i class="fa-solid fa-droplet me-1"></i> Cyber Blue</span>
+                                </div>
+                            </div>
+                            <!-- Theme 3 -->
+                            <div class="col-6 col-md-4">
+                                <div class="bg-picker-card bg-theme-3 d-flex align-items-center justify-content-center p-2" onclick="changeTheme('bg-theme-3', this)">
+                                    <span class="fw-bold text-white fs-7 text-shadow"><i class="fa-solid fa-sun me-1"></i> Sunset Glow</span>
+                                </div>
+                            </div>
+                            <!-- Theme 4 -->
+                            <div class="col-6 col-md-4">
+                                <div class="bg-picker-card bg-theme-4 d-flex align-items-center justify-content-center p-2" onclick="changeTheme('bg-theme-4', this)">
+                                    <span class="fw-bold text-white fs-7 text-shadow"><i class="fa-solid fa-moon me-1"></i> Deep Purple</span>
+                                </div>
+                            </div>
+                            <!-- Theme 5 -->
+                            <div class="col-6 col-md-4">
+                                <div class="bg-picker-card bg-theme-5 d-flex align-items-center justify-content-center p-2" onclick="changeTheme('bg-theme-5', this)">
+                                    <span class="fw-bold text-white fs-7 text-shadow"><i class="fa-solid fa-water me-1"></i> Ocean Mesh</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-ios-primary px-4 py-2" data-bs-dismiss="modal">Tayyor</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAHRIRLASH (EDIT) VA O'CHIRISH (DELETE) MODALLARI -->
+    @if (Model.TortlarRoyxati != null && Model.TortlarRoyxati.Any())
+    {
+        @foreach (var cake in Model.TortlarRoyxati)
+        {
+            <!-- EDIT MODAL -->
+            <div class="modal fade" id="editCakeModal-@cake.Id" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content modal-content-ios">
+                        <div class="modal-header border-0 pb-0">
+                            <h5 class="modal-title fw-bold">
+                                <i class="fa-solid fa-pen-to-square text-warning me-2"></i>Tortni Tahrirlash
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form asp-action="EditCake" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="Id" value="@cake.Id" />
+                            <div class="modal-body d-flex flex-column gap-3 text-start">
+                                <div>
+                                    <label class="form-label text-secondary small fw-bold">Tort Nomi</label>
+                                    <input type="text" name="Title" class="form-control ios-input" value="@cake.Title" required>
+                                </div>
+                                <div>
+                                    <label class="form-label text-secondary small fw-bold">Narxi (UZS)</label>
+                                    <input type="number" name="Price" class="form-control ios-input" value="@cake.Price" required>
+                                </div>
+                                <div>
+                                    <label class="form-label text-secondary small fw-bold">Tavsif</label>
+                                    <textarea name="Description" class="form-control ios-input" rows="3">@cake.Description</textarea>
+                                </div>
+                                <div>
+                                    <label class="form-label text-secondary small fw-bold">Yangi Rasm (Tanlanmasa o'zgarmaydi)</label>
+                                    <input type="file" name="Image" class="form-control ios-input" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0 pt-0">
+                                <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Bekor qilish</button>
+                                <button type="submit" class="btn btn-warning rounded-3 px-4 fw-bold text-dark">
+                                    <i class="fa-solid fa-rotate me-1"></i> Saqlash
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DELETE CONFIRM MODAL -->
+            <div class="modal fade" id="deleteCakeModal-@cake.Id" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-sm">
+                    <div class="modal-content modal-content-ios text-center p-3">
+                        <div class="modal-body">
+                            <i class="fa-solid fa-triangle-exclamation text-danger mb-3" style="font-size: 48px;"></i>
+                            <h5 class="fw-bold mb-2">O'chirilsinmi?</h5>
+                            <p class="text-secondary small mb-4">
+                                <strong class="text-white">@cake.Title</strong> bazadan o'chiriladi.
+                            </p>
+                            <form asp-action="DeleteCake" asp-controller="Admin" method="post">
+                                <input type="hidden" name="Id" value="@cake.Id" />
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button type="button" class="btn btn-outline-secondary rounded-3 w-50" data-bs-dismiss="modal">Yo'q</button>
+                                    <button type="submit" class="btn btn-danger rounded-3 w-50 fw-bold">Ha, O'chirish</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <!-- YANGI TORT QO'SHISH MODAL -->
+    <div class="modal fade" id="addCakeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-ios">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">
+                        <i class="fa-solid fa-cake-candles text-pink me-2"></i>Yangi Tort Qo'shish
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form asp-action="CreateCake" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                    <div class="modal-body d-flex flex-column gap-3">
+                        <div>
+                            <label class="form-label text-secondary small fw-bold">Tort Nomi</label>
+                            <input type="text" name="Title" class="form-control ios-input" placeholder="Masalan: Kiyevskiy" required>
+                        </div>
+                        <div>
+                            <label class="form-label text-secondary small fw-bold">Narxi (UZS)</label>
+                            <input type="number" name="Price" class="form-control ios-input" placeholder="140000" required>
+                        </div>
+                        <div>
+                            <label class="form-label text-secondary small fw-bold">Tavsif / Ma'lumot</label>
+                            <textarea name="Description" class="form-control ios-input" rows="3" placeholder="malinali, marojna krem, biskvit..."></textarea>
+                        </div>
+                        <div>
+                            <label class="form-label text-secondary small fw-bold">Tort Rasmi</label>
+                            <input type="file" name="Image" class="form-control ios-input" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Bekor qilish</button>
+                        <button type="submit" class="btn btn-ios-primary rounded-3 px-4 fw-bold">
+                            <i class="fa-solid fa-save me-1"></i> Saqlash
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILIAL TELEFONLARI MODALLARI -->
+    <div class="modal fade" id="editFerganaPhoneModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-ios">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-phone text-warning me-2"></i>Farg'ona Filiali Raqami</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form asp-action="UpdateBranchPhone" asp-controller="Admin" method="post">
+                    <input type="hidden" name="branchName" value="Fergana" />
+                    <div class="modal-body">
+                        <label class="form-label text-secondary small fw-bold">Telefon Raqami</label>
+                        <input type="text" name="phoneNumber" class="form-control ios-input" value="+998 (95) 232-00-03" required>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Bekor qilish</button>
+                        <button type="submit" class="btn btn-warning rounded-3 fw-bold text-dark">Saqlash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editMargilanPhoneModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-ios">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-phone text-info me-2"></i>Marg'ilon Filiali Raqami</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form asp-action="UpdateBranchPhone" asp-controller="Admin" method="post">
+                    <input type="hidden" name="branchName" value="Margilan" />
+                    <div class="modal-body">
+                        <label class="form-label text-secondary small fw-bold">Telefon Raqami</label>
+                        <input type="text" name="phoneNumber" class="form-control ios-input" value="+998 (95) 631-00-03" required>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Bekor qilish</button>
+                        <button type="submit" class="btn btn-info rounded-3 fw-bold text-white">Saqlash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FON VA PARTICLES JS -->
+    <script>
+            // FONNI O'ZGARTIRISH VA SAQLASH FUNKSIYASI
+            function changeTheme(themeClass, element) {
+                document.body.className = themeClass;
+
+                // Active klassini yangilash
+                document.querySelectorAll('.bg-picker-card').forEach(card => card.classList.remove('active'));
+                if (element) element.classList.add('active');
+
+                // Brauzer xotirasiga saqlash
+                localStorage.setItem('sara_tort_theme', themeClass);
+            }
+
+            // SAHIFA YUKLANGANDA SAQLANGAN FONNI QAYTARISH
+            document.addEventListener("DOMContentLoaded", function() {
+                const savedTheme = localStorage.getItem('sara_tort_theme');
+                if (savedTheme) {
+                    document.body.className = savedTheme;
+                    document.querySelectorAll('.bg-picker-card').forEach(card => {
+                        if (card.classList.contains(savedTheme)) {
+                            card.classList.add('active');
+                        } else {
+                            card.classList.remove('active');
+                        }
+                    });
+                }
+            });
+
+            // CANVAS ANIMATION
+            const canvas = document.getElementById('bg-particles');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            const particles = [];
+            const particleCount = 40;
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2.5 + 1,
+                    color: Math.random() > 0.5 ? '#ff375f' : '#bf5af2',
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    alpha: Math.random() * 0.5 + 0.15
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = p.color;
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+    </script>
+</body>
+</html>

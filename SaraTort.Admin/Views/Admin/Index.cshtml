@@ -204,6 +204,25 @@
                         box-shadow: 0 0 10px var(--accent-pink);
                     }
 
+            /* Sub Menu Transitions */
+            .transition-icon {
+                transition: transform 0.3s ease;
+            }
+
+                .transition-icon.rotate-180 {
+                    transform: rotate(180deg);
+                }
+
+            .sub-menu .nav-item-link {
+                color: rgba(255, 255, 255, 0.65);
+            }
+
+                .sub-menu .nav-item-link:hover {
+                    color: #ffffff;
+                    background: rgba(255, 255, 255, 0.08);
+                    transform: translateX(2px);
+                }
+
             /* Branch Card Box */
             .branch-info-card {
                 background: rgba(255, 255, 255, 0.03);
@@ -483,10 +502,32 @@
                         <span>Pechoniylar Katalogi</span>
                     </a>
 
-                    <a href="/Admin/Mijozlar" class="nav-item-link">
-                        <i class="fa-solid fa-users text-info" style="width: 20px;"></i>
-                        <span>Mijozlar Bazasi</span>
-                    </a>
+                    <!-- BAR DROPDOWN MENU -->
+                    <div class="nav-item-dropdown">
+                        <a href="javascript:void(0)" class="nav-item-link d-flex justify-content-between align-items-center" id="barMenuToggle" onclick="toggleBarMenu()">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="fa-solid fa-martini-glass-citrus text-info" style="width: 20px;"></i>
+                                <span>Bar</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-secondary fs-6 transition-icon" id="barArrow"></i>
+                        </a>
+
+                        <!-- BAR SUB-MENU KATEGORIYALARI -->
+                        <div class="sub-menu ps-4 ms-2 mt-1" id="barSubMenu" style="display: none; border-left: 1px dashed rgba(255,255,255,0.15);">
+                            <a href="/Admin/Bar/Choylar" class="nav-item-link py-2 my-1" style="font-size: 0.85rem;">
+                                <i class="fa-solid fa-mug-hot text-success me-1"></i> Choylar
+                            </a>
+                            <a href="/Admin/Bar/Kokteyllar" class="nav-item-link py-2 my-1" style="font-size: 0.85rem;">
+                                <i class="fa-solid fa-glass-water-droplet text-primary me-1"></i> Kokteyllar
+                            </a>
+                            <a href="/Admin/Bar/Maxitolar" class="nav-item-link py-2 my-1" style="font-size: 0.85rem;">
+                                <i class="fa-solid fa-wine-glass text-warning me-1"></i> Moxito
+                            </a>
+                            <a href="/Admin/Bar/Cofellar" class="nav-item-link py-2 my-1" style="font-size: 0.85rem;">
+                                <i class="fa-solid fa-mug-saucer text-danger me-1"></i> Kofe
+                            </a>
+                        </div>
+                    </div>
                 </nav>
 
                 <!-- Branch Phones Section -->
@@ -873,8 +914,22 @@
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Background Switcher & Table Search Scripts -->
+    <!-- Background Switcher, Bar Sub-menu & Table Search Scripts -->
     <script>
+            // Toggle Bar Submenu
+            function toggleBarMenu() {
+                var subMenu = document.getElementById("barSubMenu");
+                var arrow = document.getElementById("barArrow");
+
+                if (subMenu.style.display === "none" || subMenu.style.display === "") {
+                    subMenu.style.display = "block";
+                    arrow.classList.add("rotate-180");
+                } else {
+                    subMenu.style.display = "none";
+                    arrow.classList.remove("rotate-180");
+                }
+            }
+
             // On Page Load: Restore Saved Background from LocalStorage
             document.addEventListener("DOMContentLoaded", function() {
                 var savedBgType = localStorage.getItem("saratort_bg_type");

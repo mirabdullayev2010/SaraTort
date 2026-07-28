@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SaraTort.Admin.Models;
-using SaraTort.BLL.DTOs.Cake;
-using SaraTort.BLL.DTOs.Order;
 using SaraTort.DAL.Persistence;
 using SaraTort.Domain.Entities.Catalog;
 
@@ -12,51 +9,30 @@ namespace SaraTort.Admin.Controllers
     public class AdminController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly IWebHostEnvironment _env;
 
-        public AdminController(AppDbContext context, IWebHostEnvironment env)
+        public AdminController(AppDbContext context)
         {
             _context = context;
-            _env = env;
         }
 
+        // 1. DASHBOARD (FAQAT TORTLAR)
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var today = DateTime.UtcNow.Date;
+            var cakeCategory = await _context.Category
+                .FirstOrDefaultAsync(c => c.Name.ToLower().Contains("tort"));
+
+            int cakeCategoryId = cakeCategory?.Id ?? 0;
 
             var model = new DashboardViewModel
             {
-                BugungiTushum = await _context.Orders
-                    .Where(o => o.CreatedAt >= today)
-                    .SumAsync(o => (decimal?)o.TotalAmount) ?? 0,
-
-                BugungiBuyurtmalarSoni = await _context.Orders
-                    .CountAsync(o => o.CreatedAt >= today),
-
                 FaolMijozlarSoni = await _context.Users.CountAsync(),
 
-                KatalogdagiTortlarSoni = await _context.Cakes.CountAsync(),
-
-                OxirgiBuyurtmalar = await _context.Orders
-                    .OrderByDescending(o => o.CreatedAt)
-                    .Take(10)
-                    .Select(o => new OrderForResultDto
-                    {
-                        Id = o.Id,
-                        CustomerName = o.CustomerName,
-                        CustomerPhone = o.CustomerPhone,
-                        DeliveryAddress = o.DeliveryAddress,
-                        CustomComment = o.CustomComment,
-                        OrderDate = o.CreatedAt,
-                        DeliveryDate = o.DeliveryDate,
-                        TotalAmount = o.TotalAmount,
-                        Status = o.Status,
-                        PaymentStatus = o.PaymentStatus
-                    })
-                    .ToListAsync(),
+                KatalogdagiTortlarSoni = await _context.Cakes
+                    .CountAsync(c => cakeCategoryId == 0 || c.CategoryId == cakeCategoryId),
 
                 TortlarRoyxati = await _context.Cakes
+                    .Where(c => cakeCategoryId == 0 || c.CategoryId == cakeCategoryId)
                     .OrderByDescending(c => c.Id)
                     .ToListAsync()
             };
@@ -64,61 +40,75 @@ namespace SaraTort.Admin.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateCake([FromForm] CakeForCreateDto dto)
+        // 2. PECHONIYLAR KATALOGI (FAQAT PECHONIYLAR)
+        [HttpGet]
+        public async Task<IActionResult> Pechoniylar()
         {
-            string imagePath = "/images/default-cake.png";
+            var pechoniyCategory = await _context.Category
+                .FirstOrDefaultAsync(c => c.Name.ToLower().Contains("pechoniy"));
 
-            if (dto.Image != null && dto.Image.Length > 0)
+            int pechoniyCategoryId = pechoniyCategory?.Id ?? 0;
+
+            var model = new DashboardViewModel
             {
-                string uploadsFolder = Path.Combine(_env.WebRootPath, "images", "cakes");
+                FaolMijozlarSoni = await _context.Users.CountAsync(),
+
+                KatalogdagiTortlarSoni = await _context.Cakes
+                    .CountAsync(c => c.CategoryId == pechoniyCategoryId),
+
+                TortlarRoyxati = await _context.Cakes
+                    .Where(c => c.CategoryId == pechoniyCategoryId)
+                    .OrderByDescending(c => c.Id)
+                    .ToListAsync()
+            };
+
+            return View(model);
+        }
+
+        // 3. MIJOZLAR BAZASI
+        [HttpGet]
+        public async Task<IActionResult> Mijozlar()
+        {
+            var users = await _context.Users.ToListAsync();
+            return View(users);
+        }
+
+        // 4. YANGI MAHSULOT QO'SHISH (CREATE)
+        [HttpPost]
+        public async Task<IActionResult> CreateCake(string Title, decimal Price, string Description, IFormFile Image)
+        {
+            string imageUrl = "/images/default-cake.png";
+
+            if (Image != null && Image.Length > 0)
+            {
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/cakes");
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
                 }
 
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + dto.Image.FileName;
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(Image.FileName);
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    await dto.Image.CopyToAsync(fileStream);
+                    await Image.CopyToAsync(fileStream);
                 }
 
-                imagePath = "/images/cakes/" + uniqueFileName;
+                imageUrl = "/images/cakes/" + uniqueFileName;
             }
 
-            string cakeName = !string.IsNullOrWhiteSpace(dto.Name) ? dto.Name : dto.Title;
-            if (string.IsNullOrWhiteSpace(cakeName))
-            {
-                cakeName = "Yangi Tort";
-            }
-
-            var category = await _context.Category.FirstOrDefaultAsync();
-
-            if (category == null)
-            {
-                category = new Category
-                {
-                    Name = "Umumiy",
-                    Description = "Boshlang'ich kategoriya",
-                    IsActive = true
-                };
-                _context.Category.Add(category);
-                await _context.SaveChangesAsync();
-            }
-
-            int targetCategoryId = dto.CategoryId > 0 ? (int)dto.CategoryId : category.Id;
+            // Standart ravishda "Tort" kategoriyasiga biriktiramiz
+            var cakeCategory = await _context.Category
+                .FirstOrDefaultAsync(c => c.Name.ToLower().Contains("tort"));
 
             var newCake = new Cake
             {
-                Title = cakeName,
-                Name = cakeName,
-                Price = dto.Price,
-                Description = dto.Description ?? "",
-                ImageUrl = imagePath,
-                CategoryId = targetCategoryId,
-                CreatedAt = DateTime.UtcNow
+                Title = Title,
+                Price = Price,
+                Description = Description,
+                ImageUrl = imageUrl,
+                CategoryId = cakeCategory?.Id ?? 1
             };
 
             _context.Cakes.Add(newCake);
@@ -127,34 +117,34 @@ namespace SaraTort.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // 5. MAHSULOTNI TAHRIRLASH (EDIT)
         [HttpPost]
-        public async Task<IActionResult> EditCake(int id, string title, decimal price, string description, IFormFile? image)
+        public async Task<IActionResult> EditCake(int Id, string Title, decimal Price, string Description, IFormFile Image)
         {
-            var cake = await _context.Cakes.FindAsync(id);
+            var cake = await _context.Cakes.FindAsync(Id);
             if (cake == null)
             {
                 return NotFound();
             }
 
-            cake.Title = title;
-            cake.Name = title;
-            cake.Price = price;
-            cake.Description = description ?? "";
+            cake.Title = Title;
+            cake.Price = Price;
+            cake.Description = Description;
 
-            if (image != null && image.Length > 0)
+            if (Image != null && Image.Length > 0)
             {
-                string uploadsFolder = Path.Combine(_env.WebRootPath, "images", "cakes");
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/cakes");
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
                 }
 
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(Image.FileName);
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    await image.CopyToAsync(fileStream);
+                    await Image.CopyToAsync(fileStream);
                 }
 
                 cake.ImageUrl = "/images/cakes/" + uniqueFileName;
@@ -166,6 +156,7 @@ namespace SaraTort.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // 6. MAHSULOTNI O'CHIRISH (DELETE)
         [HttpPost]
         public async Task<IActionResult> DeleteCake(int id)
         {
@@ -175,6 +166,18 @@ namespace SaraTort.Admin.Controllers
                 _context.Cakes.Remove(cake);
                 await _context.SaveChangesAsync();
             }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // 7. FILIAL TELEFON RAQAMINI YANGILASH
+        [HttpPost]
+        public async Task<IActionResult> UpdateBranchPhone(string Branch, string PhoneNumber)
+        {
+            // Bu yerda o'zingizning filiallar yoki sozlamalar jadvalingiz bilan bog'lashingiz mumkin
+            // Masalan: AppSettings yoki Branches jadvalini yangilash logic-i qo'yiladi.
+
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SaraTort.Admin.Models;
 using SaraTort.DAL.Persistence;
 using SaraTort.Domain.Entities.Catalog;
+using System.Security.Claims;
 
 namespace SaraTort.Admin.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly AppDbContext _context;
@@ -14,6 +19,8 @@ namespace SaraTort.Admin.Controllers
         {
             _context = context;
         }
+
+
 
         // 1. DASHBOARD (FAQAT TORTLAR)
         [HttpGet]
@@ -180,6 +187,68 @@ namespace SaraTort.Admin.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+    [HttpGet]
+        [AllowAnonymous] // Tizimga kirmaganlar ham bu sahifani ocha oladi
+        public IActionResult Login()
+        {
+            // Agar admin allaqachon tizimga kirgan bo'lsa, uni to'g'ridan-to'g'ri Dashboard'ga yo'naltiramiz
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+
+            return View();
+        }
+
+        // 2. FORMADAN KELGAN MA'LUMOTLARNI TEKSHIRISH (POST)
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(Login model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // Statik tekshirish (yoki Database'dan foydalanuvchini tekshirishingiz mumkin)
+            // Masalan: Login: "admin", Parol: "12345"
+            if (model.Username == "Muhammadsodiq" && model.Password == "907818177")
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, model.Username),
+                    new Claim(ClaimTypes.Role, "Admin")
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = model.RememberMe // "Eslab qolinsin" belgilangan bo'lsa
+                };
+
+                // Tizimga kirish sessiyasini yaratish (Cookie yozish)
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+
+                return RedirectToAction("Index", "Admin");
+            }
+
+            // Agar login yoki parol xato bo'lsa:
+            ModelState.AddModelError("", "Login yoki parol noto'g'ri!");
+            return View(model);
+        }
+
+        // 3. TIZIMDAN CHIQISH (LOGOUT)
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Admin");
         }
     }
 }

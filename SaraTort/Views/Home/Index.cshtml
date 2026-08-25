@@ -1,8 +1,191 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Bosh sahifa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Hero Dynamic Banner -->
+<section class="ios-card-pro rounded-[2.5rem] p-8 md:p-14 mb-16 relative overflow-hidden group">
+    <!-- Dynamic Glowing Blobs inside Hero -->
+    <div class="absolute -right-20 -top-20 w-80 h-80 bg-gradient-to-br from-pink-500/30 to-purple-600/30 rounded-full blur-3xl group-hover:scale-125 transition duration-700"></div>
+
+    <div class="relative z-10 max-w-2xl">
+        <div class="inline-flex items-center gap-2 bg-pink-500/10 border border-pink-500/30 text-pink-300 px-4 py-1.5 rounded-full text-xs font-bold backdrop-blur-md mb-6 shadow-sm">
+            <span class="flex h-2 w-2 rounded-full bg-pink-400 animate-ping"></span>
+            Yangi To'plam 2026
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-[1.1] text-white mb-6">
+            San'at Darajasidagi <span class="shimmer-text">Shirinliklar</span>
+        </h1>
+
+        <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-8 max-w-lg font-light">
+            Eksklyuziv biskvitlar, premium tortlar va eng mazali desserts kutilmagan ta'm uyg'unligida sizni kutmoqda.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4">
+            <a href="#katalog" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold text-sm px-8 py-4 rounded-2xl shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 hover:scale-105 active:scale-95 transition duration-300 flex items-center gap-2">
+                <span>Katalogni ochish</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+            <a href="#filiallar" class="bg-white/5 hover:bg-white/10 text-white font-semibold text-sm px-7 py-4 rounded-2xl border border-white/10 backdrop-blur-md active:scale-95 transition duration-300">
+                Bizning Filiallar
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Catalogue Grid -->
+<section id="katalog" class="mb-20">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div>
+            <span class="text-xs font-bold text-pink-400 tracking-wider uppercase">Menyu va Katalog</span>
+            <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight mt-1">Saralangan Mahsulotlar</h2>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="bg-white/5 border border-white/10 px-4 py-2 rounded-2xl text-xs font-semibold text-gray-300 backdrop-blur-md flex items-center gap-2">
+                <i data-lucide="layers" class="w-4 h-4 text-pink-400"></i>
+                Jami: <strong class="text-white">1 ta faol</strong>
+            </span>
+        </div>
+    </div>
+
+    <!-- Product Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 3D Ultra Glass Card (Teramisu) -->
+        <div class="ios-card-pro rounded-[2rem] p-5 flex flex-col justify-between group relative">
+            <!-- Glass Badge -->
+            <div class="absolute top-8 left-8 z-20 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest text-pink-300 uppercase">
+                HIT SALES
+            </div>
+
+            <div>
+                <!-- Image Container with Hover Scale -->
+                <div class="relative h-60 rounded-2xl overflow-hidden mb-6 bg-gradient-to-b from-purple-900/30 to-black/60 border border-white/10 flex items-center justify-center">
+                    <div class="w-24 h-24 rounded-3xl bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 flex items-center justify-center font-black text-white text-2xl shadow-2xl group-hover:scale-110 group-hover:rotate-3 transition duration-500">
+                        SARA
+                    </div>
+                    <!-- Dynamic Price Pill -->
+                    <div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-xl border border-white/15 px-4 py-1.5 rounded-xl font-extrabold text-white text-xs shadow-lg">
+                        190 000 <span class="text-pink-400 text-[10px]">UZS</span>
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-pink-400 transition">Teramisu</h3>
+                <p class="text-xs text-gray-400 leading-relaxed font-light mb-6">
+                    Marojna krem, qaymoq, karamel va eng mayin biskvitli klassik italyancha uslub.
+                </p>
+            </div>
+
+            <!-- Action Button -->
+            <button onclick="addToCart('Teramisu', 190000)" class="w-full bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 hover:from-pink-500 hover:to-purple-600 border border-pink-500/30 hover:border-transparent text-white py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase transition duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                <span>Savatga qo'shish</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Filiallar (Interactive Glass Cards) -->
+<section id="filiallar" class="mb-12">
+    <div class="mb-8">
+        <span class="text-xs font-bold text-purple-400 tracking-wider uppercase">Aloqa va Lokatsiya</span>
+        <h2 class="text-3xl font-black text-white tracking-tight mt-1">Bizning Filiallar</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Farg'ona -->
+        <div class="ios-card-pro rounded-3xl p-6 flex items-center justify-between group">
+            <div class="flex items-center gap-5">
+                <div class="w-14 h-14 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 group-hover:scale-110 transition duration-300">
+                    <i data-lucide="map-pin" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] font-bold text-pink-400 uppercase tracking-widest">Markaziy</span>
+                    <h4 class="text-lg font-bold text-white">Farg'ona filiali</h4>
+                    <p class="text-xs text-gray-300 mt-1 font-mono">+998 (95) 232-00-03</p>
+                </div>
+            </div>
+            <a href="tel:+998952320003" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 hover:bg-pink-500 hover:border-transparent text-white flex items-center justify-center transition active:scale-90 shadow-md">
+                <i data-lucide="phone-call" class="w-5 h-5"></i>
+            </a>
+        </div>
+
+        <!-- Marg'ilon -->
+        <div class="ios-card-pro rounded-3xl p-6 flex items-center justify-between group">
+            <div class="flex items-center gap-5">
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition duration-300">
+                    <i data-lucide="map-pin" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Filial</span>
+                    <h4 class="text-lg font-bold text-white">Marg'ilon filiali</h4>
+                    <p class="text-xs text-gray-300 mt-1 font-mono">+998 (95) 631-00-03</p>
+                </div>
+            </div>
+            <a href="tel:+998956310003" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 hover:bg-purple-600 hover:border-transparent text-white flex items-center justify-center transition active:scale-90 shadow-md">
+                <i data-lucide="phone-call" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Savat Interactive Drawer/Modal -->
+<div id="cart-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300 flex justify-end">
+    <div class="w-full max-w-md h-full ios-card-pro border-l border-white/10 p-6 flex flex-col justify-between translate-x-full transition-transform duration-300" id="cart-drawer">
+        <div>
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-pink-400"></i>
+                    <h3 class="text-lg font-bold text-white">Sizning Savatingiz</h3>
+                </div>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-white p-1 rounded-lg">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items -->
+            <div class="space-y-4">
+                <div class="ios-card-pro rounded-2xl p-4 flex items-center justify-between">
+                    <div>
+                        <h5 class="text-sm font-bold text-white">Teramisu</h5>
+                        <p class="text-xs text-pink-400 font-semibold mt-0.5">190 000 UZS</p>
+                    </div>
+                    <div class="flex items-center gap-3 bg-black/40 px-3 py-1 rounded-xl border border-white/10">
+                        <span class="text-xs font-bold">1 ta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="border-t border-white/10 pt-4 mb-6">
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-400">Jami summasi:</span>
+                    <span class="font-bold text-white text-base">190 000 UZS</span>
+                </div>
+            </div>
+            <button class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-pink-500/30 hover:opacity-95 active:scale-95 transition">
+                Buyurtmani Rasmiylashtirish ➔
+            </button>
+        </div>
+    </div>
 </div>
+
+<script>
+    function toggleCart() {
+        const modal = document.getElementById('cart-modal');
+        const drawer = document.getElementById('cart-drawer');
+
+        if (modal.classList.contains('opacity-0')) {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            drawer.classList.remove('translate-x-full');
+        } else {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            drawer.classList.add('translate-x-full');
+        }
+    }
+
+    function addToCart(name, price) {
+        toggleCart();
+    }
+</script>

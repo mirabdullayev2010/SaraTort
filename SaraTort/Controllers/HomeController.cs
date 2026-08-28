@@ -9,12 +9,17 @@ namespace SaraTort.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        // Pechniylar o'rniga Pirojniylar
+        public IActionResult Pirojniylar()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Bar()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();

@@ -100,10 +100,10 @@
     <!-- Floating Dynamic Island Header -->
     <header class="sticky top-5 z-50 max-w-5xl mx-auto px-4 w-full">
         <nav class="ios-glass-nav rounded-full px-6 py-2.5 flex items-center justify-between">
-            <!-- iOS App Icon ko'rinishida moslashtirilgan Logotip -->
+            <!-- Logotip -->
             <a class="flex items-center gap-3 group" asp-controller="Home" asp-action="Index">
                 <div class="w-10 h-10 rounded-xl overflow-hidden shadow-md shadow-pink-500/20 border border-white/20 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center bg-black/30">
-                    <img src="~/images/logo.png" alt="SARA cafe & bakery" class="w-full h-full object-cover" />
+                    <img src="~/images/logo.png" onerror="this.onerror=null; this.src='https://i.postimg.cc/mD8p95k1/logo.png';" alt="SARA cafe & bakery" class="w-full h-full object-cover" />
                 </div>
                 <span class="font-black text-xl tracking-tight shimmer-text">
                     SARA TORT
@@ -111,13 +111,25 @@
             </a>
 
             <!-- Navigation Links -->
+            @{
+                var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
+            }
             <div class="hidden md:flex items-center gap-1 bg-black/40 p-1.5 rounded-full border border-white/10 backdrop-blur-md">
-                <a class="px-5 py-2 rounded-full text-xs font-semibold text-white bg-white/10 shadow-inner transition" asp-controller="Home" asp-action="Index">Bosh sahifa</a>
-                <a href="#katalog" class="px-5 py-2 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/5 transition">Katalog</a>
-                <a href="#filiallar" class="px-5 py-2 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/5 transition">Filiallar</a>
+                <a asp-controller="Home" asp-action="Index"
+                   class="px-5 py-2 rounded-full text-xs font-bold transition duration-300 @(currentAction == "Index" ? "text-white bg-white/20 shadow-inner border border-white/10" : "text-gray-400 hover:text-white hover:bg-white/5")">
+                    Tortlar
+                </a>
+                <a asp-controller="Home" asp-action="Pirojniylar"
+                   class="px-5 py-2 rounded-full text-xs font-bold transition duration-300 @(currentAction == "Pirojniylar" ? "text-white bg-white/20 shadow-inner border border-white/10" : "text-gray-400 hover:text-white hover:bg-white/5")">
+                    Pirojniylar
+                </a>
+                <a asp-controller="Home" asp-action="Bar"
+                   class="px-5 py-2 rounded-full text-xs font-bold transition duration-300 @(currentAction == "Bar" ? "text-white bg-white/20 shadow-inner border border-white/10" : "text-gray-400 hover:text-white hover:bg-white/5")">
+                    Bar
+                </a>
             </div>
 
-            <!-- Savat Pill Button -->
+            <!-- Savat Button -->
             <button onclick="toggleCart()" class="relative group bg-gradient-to-r from-pink-500 to-purple-600 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-lg shadow-pink-500/30 hover:scale-105 active:scale-95 transition flex items-center gap-2 overflow-hidden">
                 <span class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition"></span>
                 <i data-lucide="shopping-bag" class="w-4 h-4"></i>
@@ -130,10 +142,78 @@
     <!-- Main Content -->
     <main role="main" class="max-w-6xl mx-auto px-4 mt-8 w-full flex-grow">
         @RenderBody()
+
+        <!-- Yagona Filiallar va Ijtimoiy tarmoqlar Sektsiyasi -->
+        <section id="filiallar" class="mt-24 mb-8">
+            <div class="mb-8">
+                <span class="text-[11px] font-bold text-pink-400 tracking-widest uppercase block mb-1">
+                    ALOQA VA LOKATSIYA
+                </span>
+                <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">
+                    Bizning Filiallar
+                </h2>
+            </div>
+
+            <!-- 2 ta Filial kartasi -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="ios-card-pro rounded-3xl p-6 flex items-center justify-between group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 group-hover:scale-110 transition duration-300">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-black text-pink-400 tracking-wider uppercase block">MARKAZIY</span>
+                            <h3 class="text-xl font-bold text-white tracking-wide">Farg'ona filiali</h3>
+                            <p class="text-xs text-gray-400 font-mono mt-1">+998 (95) 232-00-03</p>
+                        </div>
+                    </div>
+                    <a href="tel:+998952320003" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-white hover:bg-pink-500/20 hover:border-pink-500/30 transition duration-300">
+                        <i data-lucide="phone-call" class="w-5 h-5"></i>
+                    </a>
+                </div>
+
+                <div class="ios-card-pro rounded-3xl p-6 flex items-center justify-between group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition duration-300">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-black text-purple-400 tracking-wider uppercase block">FILIAL</span>
+                            <h3 class="text-xl font-bold text-white tracking-wide">Marg'ilon filiali</h3>
+                            <p class="text-xs text-gray-400 font-mono mt-1">+998 (95) 631-00-03</p>
+                        </div>
+                    </div>
+                    <a href="tel:+998956310003" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-white hover:bg-purple-500/20 hover:border-purple-500/30 transition duration-300">
+                        <i data-lucide="phone-call" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Telegram & Instagram Tugmalari -->
+            <div class="flex items-center justify-center gap-4 pt-2">
+                <a href="https://t.me/saratort_fergana" target="_blank" rel="noopener noreferrer"
+                   class="ios-card-pro px-5 py-2.5 rounded-full flex items-center gap-2 text-xs font-semibold text-gray-300 hover:text-white hover:border-sky-500/50 hover:bg-sky-500/10 transition-all duration-300">
+                    <svg class="w-4 h-4 text-sky-400 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-2.02 9.52c-.15.68-.55.85-1.12.53l-3.08-2.27-1.49 1.43c-.16.16-.3.3-.62.3l.22-3.13 5.7-5.15c.25-.22-.05-.34-.38-.12l-7.05 4.44-3.04-.95c-.66-.21-.67-.66.14-.98l11.89-4.58c.55-.2 1.03.13.85.96z" />
+                    </svg>
+                    <span>Telegram</span>
+                </a>
+
+                <a href="https://www.instagram.com/saratort_fergana/" target="_blank" rel="noopener noreferrer"
+                   class="ios-card-pro px-5 py-2.5 rounded-full flex items-center gap-2 text-xs font-semibold text-gray-300 hover:text-white hover:border-pink-500/50 hover:bg-pink-500/10 transition-all duration-300">
+                    <svg class="w-4 h-4 text-pink-400 stroke-current" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span>Instagram</span>
+                </a>
+            </div>
+        </section>
     </main>
 
     <!-- Glass Footer -->
-    <footer class="mt-24 border-t border-white/10 py-8 backdrop-blur-lg bg-black/30">
+    <footer class="mt-16 border-t border-white/10 py-8 backdrop-blur-lg bg-black/30">
         <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
             <div class="flex items-center gap-2">
                 <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>

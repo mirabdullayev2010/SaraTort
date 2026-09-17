@@ -4,57 +4,242 @@
     ViewData["Title"] = "Pechoniylar Katalogi";
 }
 
-<!-- Sarlavha paneli -->
+<style>
+    /* iOS Glassmorphism Card Style */
+    .ios-glass-card {
+        background: rgba(18, 18, 30, 0.45) !important;
+        backdrop-filter: blur(25px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 24px !important;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .ios-glass-input {
+        background: rgba(255, 255, 255, 0.07) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        color: #ffffff !important;
+        border-radius: 14px !important;
+    }
+
+    .ios-glass-input:focus {
+        background: rgba(255, 255, 255, 0.12) !important;
+        border-color: #ff2a74 !important;
+        box-shadow: 0 0 15px rgba(255, 42, 116, 0.4) !important;
+    }
+
+    .ios-btn-primary {
+        background: linear-gradient(135deg, #ff2a74, #ff5252) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 14px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 8px 25px rgba(255, 42, 116, 0.4) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    .ios-btn-primary:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 12px 30px rgba(255, 42, 116, 0.6) !important;
+    }
+
+    .btn-theme-select {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        color: #ffffff !important;
+        border-radius: 14px !important;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-theme-select:hover {
+        background: rgba(255, 255, 255, 0.18) !important;
+        color: #fff !important;
+    }
+
+    /* Transparent Table Style */
+    .table-ios {
+        --bs-table-bg: transparent !important;
+        --bs-table-accent-bg: transparent !important;
+        --bs-table-striped-bg: transparent !important;
+        color: #ffffff !important;
+        background-color: transparent !important;
+    }
+
+    .table-ios th {
+        background-color: transparent !important;
+        text-transform: uppercase !important;
+        font-size: 0.72rem !important;
+        letter-spacing: 1.2px !important;
+        color: #8e8e93 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        padding: 18px 20px !important;
+    }
+
+    .table-ios td {
+        background-color: transparent !important;
+        padding: 16px 20px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        vertical-align: middle !important;
+    }
+
+    .table-ios tr:hover td {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .action-icon-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
+        transition: all 0.2s ease;
+    }
+
+    .action-icon-edit {
+        color: #f59e0b;
+    }
+
+    .action-icon-edit:hover {
+        background: #f59e0b;
+        color: #fff;
+    }
+
+    .action-icon-delete {
+        color: #ff4d4d;
+    }
+
+    .action-icon-delete:hover {
+        background: #ff4d4d;
+        color: #fff;
+    }
+
+    /* Skromniy Theme Selection Style */
+    .bg-option-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 10px 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .bg-option-card:hover, .bg-option-card.active {
+        border-color: rgba(255, 42, 116, 0.5);
+        background: rgba(255, 42, 116, 0.08);
+    }
+
+    .theme-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+</style>
+
+<!-- Sarlavha va Fon Tanlash Tugmalari -->
 <div class="d-flex align-items-center justify-content-between mb-4">
     <div>
-        <h3 class="fw-extrabold text-white mb-1">
-            <i class="fa-solid fa-cookie-bite text-warning me-2"></i>Pechoniylar Katalogi
-        </h3>
-        <p class="text-secondary mb-0">Pechoniy mahsulotlarini boshqarish va yangi tur qo'shish</p>
+        <h2 class="fw-bold text-white mb-1 d-flex align-items-center gap-2">
+            <i class="fa-solid fa-cookie-bite text-warning"></i> Pechoniylar Katalogi
+        </h2>
+        <p class="text-secondary mb-0 small">Pechoniy mahsulotlarini boshqarish va yangi tur qo'shish</p>
     </div>
 
-    <button class="btn btn-ios-primary px-4 py-2" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
-        <i class="fa-solid fa-plus-circle me-1"></i> Yangi Pechoniy Qo'shish
-    </button>
+    <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-theme-select d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#bgThemeModal">
+            <i class="fa-solid fa-palette"></i>
+            <span>Orqa Fon</span>
+        </button>
+
+        <button class="btn ios-btn-primary px-4 py-2 d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addPechoniyModal">
+            <i class="fa-solid fa-plus-circle"></i>
+            <span>Yangi Pechoniy</span>
+        </button>
+    </div>
 </div>
 
-<!-- Faqat Pechoniylar Ro'yxati -->
-<div class="glass-card">
+<!-- Stat Kartochkasi -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="ios-glass-card p-4 d-flex align-items-center justify-content-between">
+            <div>
+                <span class="text-secondary text-uppercase fw-semibold" style="font-size: 0.72rem; letter-spacing: 1px;">Katalogdagi Pechoniylar</span>
+                <h2 class="text-white fw-bold my-1">@(Model?.TortlarRoyxati?.Count ?? 0) xil</h2>
+                <span class="badge bg-warning bg-opacity-20 text-warning px-3 py-1 rounded-pill" style="font-size: 0.75rem;">
+                    <i class="fa-solid fa-cookie me-1"></i> Menudagi faol pechoniylar
+                </span>
+            </div>
+            <div style="width: 52px; height: 52px; border-radius: 16px; background: rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center;" class="text-warning">
+                <i class="fa-solid fa-cookie-bite fa-xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ro'yxat Jadvali -->
+<div class="ios-glass-card p-3">
+    <div class="d-flex align-items-center justify-content-between p-3 border-bottom border-white border-opacity-10">
+        <h5 class="text-white fw-bold mb-0 d-flex align-items-center gap-2">
+            <i class="fa-solid fa-list text-secondary"></i> Katalogdagi Mahsulotlar
+        </h5>
+        <span class="badge bg-danger bg-opacity-20 text-danger px-3 py-2 rounded-pill fw-semibold">
+            Jami: @(Model?.TortlarRoyxati?.Count ?? 0) ta
+        </span>
+    </div>
+
     <div class="table-responsive">
-        <table class="table table-dark table-hover mb-0 align-middle">
+        <table class="table table-ios mb-0">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Rasm</th>
+                    <th style="width: 60px;">#</th>
+                    <th style="width: 80px;">Rasm</th>
                     <th>Nomi</th>
+                    <th>Tavsif</th>
                     <th>Narxi</th>
                     <th class="text-end">Amallar</th>
                 </tr>
             </thead>
             <tbody>
-                @if (Model.TortlarRoyxati != null && Model.TortlarRoyxati.Any())
+                @if (Model?.TortlarRoyxati != null && Model.TortlarRoyxati.Any())
                 {
                     int index = 1;
                     @foreach (var item in Model.TortlarRoyxati)
                     {
                         <tr>
-                            <td>@(index++)</td>
+                            <td class="text-secondary fw-bold" style="font-size: 0.85rem;">@index</td>
                             <td>
-                                <img src="@item.ImageUrl" style="width: 45px; height: 45px; border-radius: 12px; object-fit: cover;" />
+                                <!-- Skromniy ixcham rasm -->
+                                <div style="width: 36px; height: 36px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(0, 0, 0, 0.2); display: flex; align-items: center; justify-content: center;">
+                                    <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/default-cookie.png" : item.ImageUrl)"
+                                         style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;" />
+                                </div>
                             </td>
-                            <td class="fw-bold">@item.Title</td>
-                            <td class="text-warning fw-bold">@item.Price.ToString("N0") UZS</td>
+                            <td class="fw-semibold text-white" style="font-size: 0.9rem;">@item.Name</td>
+                            <td class="text-secondary small" style="font-size: 0.82rem;">@(string.IsNullOrEmpty(item.Description) ? "Tavsif yo'q" : item.Description)</td>
+                            <td class="fw-semibold text-white" style="font-size: 0.9rem;">@item.Price.ToString("N0") <span class="text-secondary small" style="font-size: 0.75rem;">uzs</span></td>
                             <td class="text-end">
-                                <button class="btn btn-sm btn-outline-warning me-1"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                                <button class="action-icon-btn action-icon-edit me-1" title="Tahrirlash">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button class="action-icon-btn action-icon-delete" title="O'chirish">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
                             </td>
                         </tr>
+                        index++;
                     }
                 }
                 else
                 {
                     <tr>
-                        <td colspan="5" class="text-center text-secondary py-4">
+                        <td colspan="6" class="text-center text-secondary py-5">
+                            <i class="fa-solid fa-cookie fa-2x mb-2 d-block text-secondary opacity-25"></i>
                             Hozircha pechoniylar katalogida mahsulot yo'q.
                         </td>
                     </tr>
@@ -63,3 +248,119 @@
         </table>
     </div>
 </div>
+
+<!-- Yangi Pechoniy Qo'shish Modali -->
+<div class="modal fade" id="addPechoniyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ios-glass-card border-0 text-white" style="background: rgba(20, 20, 35, 0.9) !important;">
+            <div class="modal-header border-bottom border-white border-opacity-10">
+                <h5 class="modal-title fw-bold text-white d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-cookie-bite text-warning"></i> Yangi Pechoniy Qo'shish
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-controller="Pechoniylar" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small">Pechoniy Nomi</label>
+                        <input type="text" name="name" class="form-control ios-glass-input" placeholder="Masalan: Shokoladli Pechoniy" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small">Tavsifi</label>
+                        <textarea name="description" class="form-control ios-glass-input" rows="3" placeholder="Pechoniy tarkibi va batafsil ma'lumot..." required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small">Narxi (UZS)</label>
+                        <input type="number" name="price" class="form-control ios-glass-input" placeholder="15000" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small">Rasmi</label>
+                        <input type="file" name="image" class="form-control ios-glass-input" accept="image/*" />
+                    </div>
+                </div>
+                <div class="modal-footer border-top border-white border-opacity-10">
+                    <button type="button" class="btn btn-outline-secondary rounded-3 px-4" data-bs-dismiss="modal">Bekor qilish</button>
+                    <button type="submit" class="btn ios-btn-primary px-4">Saqlash</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Orqa Fon Mavzusini Tanlash Modali (Skromniy) -->
+<div class="modal fade" id="bgThemeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ios-glass-card border-0 text-white" style="background: rgba(18, 18, 30, 0.95) !important;">
+            <div class="modal-header border-bottom border-white border-opacity-10">
+                <h6 class="modal-title fw-semibold text-white d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-palette text-secondary"></i> Orqa fon mavzusi
+                </h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-secondary small mb-3">Tizim ko'rinishi uchun mo'ljallangan skromniy fonlar:</p>
+                
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <div class="bg-option-card" onclick="setAppBackground('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920')">
+                            <span class="theme-dot" style="background: #8b5cf6;"></span>
+                            <span class="small text-white opacity-75">Cyber Purple</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="bg-option-card" onclick="setAppBackground('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920')">
+                            <span class="theme-dot" style="background: #0ea5e9;"></span>
+                            <span class="small text-white opacity-75">Deep Ocean</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="bg-option-card" onclick="setAppBackground('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1920')">
+                            <span class="theme-dot" style="background: #ec4899;"></span>
+                            <span class="small text-white opacity-75">Neon Velvet</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="bg-option-card" onclick="setAppBackground('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920')">
+                            <span class="theme-dot" style="background: #10b981;"></span>
+                            <span class="small text-white opacity-75">Emerald Dark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-label text-secondary small">Custom Rasm URL:</label>
+                    <div class="input-group">
+                        <input type="text" id="customBgUrl" class="form-control ios-glass-input py-1 style-small" placeholder="https://..." style="font-size: 0.85rem;" />
+                        <button class="btn btn-outline-light rounded-2 px-3 style-small" type="button" onclick="applyCustomUrlBg()" style="font-size: 0.85rem;">O'rnatish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Fonni o'rnatish va localStorage da saqlash
+    function setAppBackground(url) {
+        document.body.style.backgroundImage = `url('${url}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundAttachment = 'fixed';
+        localStorage.setItem('adminBgUrl', url);
+    }
+
+    function applyCustomUrlBg() {
+        const url = document.getElementById('customBgUrl').value;
+        if (url) {
+            setAppBackground(url);
+        }
+    }
+
+    // Sahifa yuklanganda saqlangan fonni qo'llash
+    document.addEventListener("DOMContentLoaded", function() {
+        const savedBg = localStorage.getItem('adminBgUrl');
+        if (savedBg) {
+            setAppBackground(savedBg);
+        }
+    });
+</script>

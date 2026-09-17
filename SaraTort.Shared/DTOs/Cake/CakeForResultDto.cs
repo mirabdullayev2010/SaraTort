@@ -9,6 +9,7 @@ public class CakeForResultDto
     public string Description { get; set; }
     public string? ImageUrl { get; set; }
     public long CategoryId { get; set; }
+    public decimal Price { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public List<CakeReviewForResultDto> Reviews { get; set; } = new();
